@@ -23,7 +23,7 @@ class HelloWorldController extends AbstractController
      */
     public function list($page)
     {
-//        return new Response('<html><body>Hello '.$page.' ! </body></html>');
+//                                  return new Response('<html><body>Hello '.$page.' ! </body></html>');
 
 
         return $this->render('helloWorldV2.html.twig', [

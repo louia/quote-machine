@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block title%}Liste de citations{% endblock %}
+{% block stylesheets%}<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">{% endblock %}
+{% block body %}
+
+    <div class="columns">
+        <div class="column">
+        </div>
+        <div class="column is-three-fifths">
+            <h1 class="title">Liste de citations</h1>
+
+            <div class="list is-hoverable">
+                {% for quote in quotes %}
+                    <a class="list-item">
+                        <h2>{{ quote.content}}</h2>
+                        <p>{{ quote.meta }}</p>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="column">
+        </div>
+    </div>
+
+
+
+{% endblock %}
