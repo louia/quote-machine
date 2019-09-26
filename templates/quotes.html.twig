@@ -3,12 +3,24 @@
 {% block title%}Liste de citations{% endblock %}
 {% block stylesheets%}<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">{% endblock %}
 {% block body %}
-
     <div class="columns">
         <div class="column">
         </div>
         <div class="column is-three-fifths">
             <h1 class="title">Liste de citations</h1>
+
+
+            <form method="GET" name="name">
+                <label class="label">Rechercher : </label>
+                <div class="control">
+                    <input class="input" name="name" type="text">
+                    <button class="button is-link">Submit</button>
+                </div>
+            </form>
+
+            {% if result == 'true' %}
+                <a class="button is-danger" href="{{ path('quotes') }}">Retour</a>
+            {% endif %}
 
             <div class="list is-hoverable">
                 {% for quote in quotes %}

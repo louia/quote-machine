@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,9 +12,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class QuoteController extends AbstractController
 {
     /**
+     * @Route("/", name="index")
+     */
+    public function indexBis()
+    {
+        return $this->redirectToRoute('quotes');
+    }
+
+    /**
      * @Route("/quotes", name="quotes")
      */
-    public function index()
+    public function index(Request $request)
     {
         $quote1=[
             "content" => "Sire, Sire ! On en a gros !",
@@ -38,8 +47,23 @@ class QuoteController extends AbstractController
         ];
         $quotes = [$quote1,$quote2,$quote3,$quote4,$quote5];
 
+        $a =false;
+        $name = $request->query->get('name');
+        if($name != '') {
+
+            foreach ($quotes as $key => $value) {
+                if (strpos(strtolower($value['content']),strtolower($name))!== false) {
+                    $quotess[] = $value;
+                    $a=true;
+                }
+            }
+            $quotes=[];
+            if($a) $quotes=$quotess;
+        }
+
+
         return $this->render('quotes.html.twig', [
-            'quotes' => $quotes
+            'quotes' => $quotes,'result'=>$a
         ]);
     }
 
