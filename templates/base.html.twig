@@ -3,10 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    {% endblock %}
 </head>
 <body>
+<nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{{ path('quotes') }}">
+            <span style="font-size: 1.5em">Quote Machine</span>
+        </a>
+
+        <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="{{ path('quotes_new') }}">
+                Ajouter une citation
+            </a>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item field">
+                <p class="control has-icons-right">
+                    <input class="input" type="search" placeholder="Search...">
+                    <span class="icon is-small is-right">
+                        <icon />
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</nav>
+{% set _block = block('hero') %}
+{% if _block is not empty %}
+    <section class="hero is-dark">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    {% block hero %}{% endblock %}
+                </h1>
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+<br>
+
 {% block body %}{% endblock %}
+
 {% block javascripts %}{% endblock %}
 </body>
 </html>
