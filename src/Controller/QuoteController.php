@@ -24,46 +24,48 @@ class QuoteController extends AbstractController
      */
     public function index(Request $request)
     {
-        $quote1=[
-            "content" => "Sire, Sire ! On en a gros !",
-            "meta" => "Perceval, Livre II, Les Exploités"
+        $quotes = [
+            [
+                "content" => "Sire, Sire ! On en a gros !",
+                "meta" => "Perceval, Livre II, Les Exploités"
+            ],
+            [
+                "content" => "Excusez ! Y a moyen de vous entretenir deux secondes ? [...] C'est au sujet que ce matin je suis passé devant vos enclos, et j'ai vu que vous aviez une jolie petite poule blanche ! [...] Une jolie petite poule vous voyez, le bel animal [...] C'est au sujet qu'en fait c'est la mienne, et que vous allez prendre un pain dans la tête, mais quelque chose de violent !",
+                "meta" => "Guethenoc, Livre III, 53 : Feue La Poule de Guethenoc"
+            ],
+            [
+                "content" => "2500 pièces d'or ???! Eh... eh... c'est un blague? 2500 pièces d'or, mais ou voulez vous que j'trouve 2500 pièces d'or, dans l'cul d'une vache ?!",
+                "meta" => "Seigneur Jacca, Livre I, 21 : La taxe militaire"
+            ],
+            [
+                "content" => "Une pluie de pierres en intérieur donc ! Je vous prenais pour un pied de chaise mais vous êtes un précurseur en fait !",
+                "meta" => "Élias de Kelliwic'h, Livre IV, Le Privilégié"
+            ],
+            [
+                "content" => "Et qu'est-ce qui font-ils, au gouvernement ? Y's'roucent les poules ! Y's'poulent les rouces ! (Guethenoc : Y's'roulent les pouces !) Voilà, mieux !",
+                "meta" => "Roparzh, Livre IV, 53 : Vox populi III"
+            ],
         ];
 
-        $quote2=[
-            "content" => "Excusez ! Y a moyen de vous entretenir deux secondes ? [...] C'est au sujet que ce matin je suis passé devant vos enclos, et j'ai vu que vous aviez une jolie petite poule blanche ! [...] Une jolie petite poule vous voyez, le bel animal [...] C'est au sujet qu'en fait c'est la mienne, et que vous allez prendre un pain dans la tête, mais quelque chose de violent !",
-            "meta" => "Guethenoc, Livre III, 53 : Feue La Poule de Guethenoc"
-        ];
-        $quote3=[
-            "content" => "2500 pièces d'or ???! Eh... eh... c'est un blague? 2500 pièces d'or, mais ou voulez vous que j'trouve 2500 pièces d'or, dans l'cul d'une vache ?!",
-            "meta" => "Seigneur Jacca, Livre I, 21 : La taxe militaire"
-        ];
-        $quote4=[
-            "content" => "Une pluie de pierres en intérieur donc ! Je vous prenais pour un pied de chaise mais vous êtes un précurseur en fait !",
-            "meta" => "Élias de Kelliwic'h, Livre IV, Le Privilégié"
-        ];
-        $quote5=[
-            "content" => "Et qu'est-ce qui font-ils, au gouvernement ? Y's'roucent les poules ! Y's'poulent les rouces ! (Guethenoc : Y's'roulent les pouces !) Voilà, mieux !",
-            "meta" => "Roparzh, Livre IV, 53 : Vox populi III"
-        ];
-        $quotes = [$quote1,$quote2,$quote3,$quote4,$quote5];
-
-        $a =false;
+        $isResponse =false;
         $name = $request->query->get('name');
         if($name != '') {
 
-            foreach ($quotes as $key => $value) {
-                if (strpos(strtolower($value['content']),strtolower($name))!== false) {
-                    $quotess[] = $value;
-                    $a=true;
+            $quotess = array_filter($quotes, function ($item) use ($name) {
+                if (stripos(strtolower($item['content']), strtolower($name)) !== false) {
+                    return true;
                 }
-            }
+                return false;
+            });
+            if(!empty($quotess)) $isResponse =true;
+
             $quotes=[];
-            if($a) $quotes=$quotess;
+            if($isResponse) $quotes=$quotess;
         }
 
 
         return $this->render('quotes.html.twig', [
-            'quotes' => $quotes,'result'=>$a
+            'quotes' => $quotes,'result'=>$isResponse,'query'=>$name
         ]);
     }
 
