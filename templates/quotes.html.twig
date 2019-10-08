@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title%}Liste de citations{% endblock %}
+{% block title %}Liste de citations{% endblock %}
 {% block hero %}Liste de citations{% endblock %}
 
 {% block body %}
@@ -8,17 +8,19 @@
         <div class="column">
         </div>
         <div class="column is-three-fifths">
-
-            <form method="GET" name="name">
-                <div class="field has-addons">
-                    <div class="control">
-                        <input class="input" name="name" type="text" placeholder="Rechercher..." value="{{ query }}">
+            {% if quotes|length > 0 %}
+                <form method="GET" name="name">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input class="input" name="name" type="text" placeholder="Rechercher..."
+                                   value="{{ query }}">
+                        </div>
+                        <div class="control">
+                            <button class="button is-link">Rechercher</button>
+                        </div>
                     </div>
-                    <div class="control">
-                        <button class="button is-link">Rechercher</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            {% endif %}
             <br>
 
             {% if result == 'true' %}
@@ -27,22 +29,33 @@
                 <p>Aucun résultat ne correspond à {{ query }}</p>
             {% endif %}
 
-            {% for quote in quotes %}
-            <section class="hero {{random(['is-primary', 'is-warning','is-light','is-dark','is-success'])}}">
-                <div class="hero-body">
-                    <div class="container">
-                        <h1 class="title">
-                            {{ quote.content}}
-                        </h1>
-                        <h2 class="subtitle">
-                            {{ quote.meta}}
-                        </h2>
-                        <a class="button is-info is-rounded" href="{{ path('quotes_edit',{'id': quote._id}) }}">Modifier &nbsp;<i class="far fa-edit"></i></a>
-                        <a class="button is-danger is-rounded" href="{{ path('quotes_delete', { 'id': quote._id }) }}">Supprimer &nbsp;<i class="fas fa-trash"></i></a>
+            {% if quotes|length > 0 %}
+                {% for quote in quotes %}
+                    <section class="hero {{ random(['is-primary', 'is-warning','is-light','is-dark','is-success']) }}">
+                        <div class="hero-body">
+                            <div class="container">
+                                <h1 class="title">
+                                    {{ quote.content }}
+                                </h1>
+                                <h2 class="subtitle">
+                                    {{ quote.meta }}
+                                </h2>
+                                <a class="button is-info is-rounded" href="{{ path('quotes_edit',{'id': quote._id}) }}">Modifier
+                                    &nbsp;<i class="far fa-edit"></i></a>
+                                <a class="button is-danger is-rounded"
+                                   href="{{ path('quotes_delete', { 'id': quote._id }) }}">Supprimer &nbsp;<i
+                                            class="fas fa-trash"></i></a>
+                            </div>
+                        </div>
+                    </section>
+                {% endfor %}
+            {% else %}
+                <article class="message is-danger">
+                    <div class="message-body">
+                        Aucune citation n'a été trouvé. Veuillez ajouter une citation pour la voir apparaitre.
                     </div>
-                </div>
-            </section>
-            {% endfor %}
+                </article>
+            {% endif %}
 
         </div>
         <div class="column">
