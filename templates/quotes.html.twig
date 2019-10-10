@@ -40,10 +40,10 @@
                                 <h2 class="subtitle">
                                     {{ quote.meta }}
                                 </h2>
-                                <a class="button is-info is-rounded" href="{{ path('quotes_edit',{'id': quote._id}) }}">Modifier
+                                <a class="button is-info is-rounded" href="{{ path('quotes_edit',{'id': quote.id}) }}">Modifier
                                     &nbsp;<i class="far fa-edit"></i></a>
                                 <a class="button is-danger is-rounded"
-                                   href="{{ path('quotes_delete', { 'id': quote._id }) }}">Supprimer &nbsp;<i
+                                   href="{{ path('quotes_delete', { 'id': quote.id }) }}">Supprimer &nbsp;<i
                                             class="fas fa-trash"></i></a>
                             </div>
                         </div>

@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Citation;
 use App\Form\QuoteType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -23,36 +24,26 @@ class QuoteController extends AbstractController
     }
 
     /**
-     * @Route("/task_success", name="task_success")
-     */
-    public function task_success()
-    {
-        return $this->render('task_success.html.twig');
-    }
-
-    /**
      * @Route("/quotes", name="quotes")
      */
     public function index(Request $request)
     {
 
-        $quotesStore = \SleekDB\SleekDB::store('quotes', __DIR__ . '/../../var/sleekDB');
-        $quotes = $quotesStore->fetch();
-
+        $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAll();
 
         $isResponse =false;
         $name = $request->query->get('name');
         if($name != '') {
-            $quotess = array_filter($quotes, function ($item) use ($name) {
+            $filterQuotes = array_filter($quotes, function ($item) use ($name) {
                 if (stripos(strtolower($item['content']), strtolower($name)) !== false) {
                     return true;
                 }
                 return false;
             });
-            if(!empty($quotess)) $isResponse=true;
+            if(!empty($filterQuotes)) $isResponse=true;
 
             $quotes=[];
-            if($isResponse) $quotes=$quotess;
+            if($isResponse) $quotes=$filterQuotes;
         }
 
 
@@ -66,17 +57,16 @@ class QuoteController extends AbstractController
      */
     public function new(Request $request)
     {
-
-        $form = $this->createForm(QuoteType::class);
-
+        $quote = new Citation();
+        $form = $this->createForm(QuoteType::class,$quote);
+        $entityManager = $this->getDoctrine()->getManager();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $quote = $form->getData();
-            $quotesStore = \SleekDB\SleekDB::store('quotes', __DIR__ . '/../../var/sleekDB');
-
-            $quotesStore->insert($quote);
+            $entityManager->persist($quote);
+            $entityManager->flush();
 
             return $this->redirectToRoute('quotes');
         }
@@ -92,8 +82,14 @@ class QuoteController extends AbstractController
      */
     public function delete($id)
     {
-        $quotesStore = \SleekDB\SleekDB::store('quotes', __DIR__ . '/../../var/sleekDB');
-        $quotesStore->where( '_id', '=', $id )->delete();
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $quote = $this->getDoctrine()->getRepository(Citation::class)->find($id);
+        dump($quote);
+
+        $entityManager->remove($quote);
+        $entityManager->flush();
 
 
         return $this->redirectToRoute('quotes');
@@ -105,17 +101,21 @@ class QuoteController extends AbstractController
      */
     public function edit($id,Request $request)
     {
-        $quotesStore = \SleekDB\SleekDB::store('quotes', __DIR__ . '/../../var/sleekDB');
-        $quote = $quotesStore->where( '_id', '=', $id )->fetch();
+        $entityManager = $this->getDoctrine()->getManager();
+        $quote = $entityManager->getRepository(Citation::class)->find($id);
 
 
-        $form = $this->createForm(QuoteType::class,$quote[0]);
+        if (!$quote) {
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
+        }
+        $form = $this->createForm(QuoteType::class,$quote);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $quote = $form->getData();
-            $quotesStore->where( '_id', '=', $id )->update($quote);
+            $entityManager->flush();
 
             return $this->redirectToRoute('quotes');
         }
@@ -124,9 +124,6 @@ class QuoteController extends AbstractController
         return $this->render('quotes_edit.html.twig', [
             'form' => $form->createView(),
         ]);
-
-
-
     }
 
 }

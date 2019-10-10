@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fb4452a13a01a9e6a075c2a65ffec2e",
+    "content-hash": "06f934e3690f6fcb94efe917b8e1a1df",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1909,53 +1909,6 @@
                 "psr-3"
             ],
             "time": "2018-11-20T15:27:04+00:00"
-        },
-        {
-            "name": "rakibtg/sleekdb",
-            "version": "1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/rakibtg/SleekDB.git",
-                "reference": "e69643f47d525654d0d02866c73df3233c938455"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/rakibtg/SleekDB/zipball/e69643f47d525654d0d02866c73df3233c938455",
-                "reference": "e69643f47d525654d0d02866c73df3233c938455",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "SleekDB\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "rakibtg",
-                    "email": "rakibtg@gmail.com"
-                }
-            ],
-            "description": "SleekDB - A 30Kb NoSQL Database made using PHP",
-            "keywords": [
-                "SleekDB",
-                "api",
-                "database",
-                "flatfile",
-                "framework",
-                "micro",
-                "nosql",
-                "php",
-                "rest"
-            ],
-            "time": "2019-08-12T00:23:35+00:00"
         },
         {
             "name": "sensio/framework-extra-bundle",
