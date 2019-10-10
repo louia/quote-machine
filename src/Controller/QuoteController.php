@@ -80,13 +80,10 @@ class QuoteController extends AbstractController
     /**
      * @Route("/quotes/delete/{id}", name="quotes_delete")
      */
-    public function delete($id)
+    public function delete(Citation $quote)
     {
 
         $entityManager = $this->getDoctrine()->getManager();
-
-        $quote = $this->getDoctrine()->getRepository(Citation::class)->find($id);
-        dump($quote);
 
         $entityManager->remove($quote);
         $entityManager->flush();
@@ -99,17 +96,11 @@ class QuoteController extends AbstractController
     /**
      * @Route("/quotes/edit/{id}", name="quotes_edit")
      */
-    public function edit($id,Request $request)
+    public function edit(Citation $quote,Request $request)
     {
+
         $entityManager = $this->getDoctrine()->getManager();
-        $quote = $entityManager->getRepository(Citation::class)->find($id);
 
-
-        if (!$quote) {
-            throw $this->createNotFoundException(
-                'No product found for id '.$id
-            );
-        }
         $form = $this->createForm(QuoteType::class,$quote);
 
         $form->handleRequest($request);
@@ -124,6 +115,9 @@ class QuoteController extends AbstractController
         return $this->render('quotes_edit.html.twig', [
             'form' => $form->createView(),
         ]);
+
+
+
     }
 
 }
