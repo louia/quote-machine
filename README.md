@@ -14,7 +14,19 @@ composer install
 ```
 
 ## Usage
+Configurer vos identifiants de base de données dans le fichier de configuration .env comme suit :
+```env
+DATABASE_URL="mysql://user_bd:pws_bd@127.0.0.1:3306/name_bd"
+```
+<br>
+Installer la base de données avec la commande :
 
+```sh
+php bin/console doctrine:schema:update --force
+```
+<br>
+
+Lancer le serveur à l'aide de la commande :
 ```sh
 php bin/console server:start
 ```
