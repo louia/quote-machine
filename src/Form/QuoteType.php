@@ -17,18 +17,10 @@ class QuoteType extends AbstractType
             ->add('content', TextType::class,[
                 'label'=>'La citation',
                 'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['min' => 3]),
-                ],
             ])
             ->add('meta', TextType::class,[
                 'label'=>'Les métadonées',
                 'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['min' => 3]),
-                ],
             ],)
             ->add('save', SubmitType::class, ['label' => 'Envoyer'])
         ;

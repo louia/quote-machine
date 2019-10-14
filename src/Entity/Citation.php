@@ -21,12 +21,14 @@ class Citation
     /**
      * @ORM\Column(type="string", length=5000)
      * @Assert\NotBlank
+     * @Assert\Length(min = "3")
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=5000)
      * @Assert\NotBlank
+     * @Assert\Length(min = "3")
      */
     private $meta;
 
