@@ -47,4 +47,19 @@ class CitationRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllbyContent($value): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT c
+        FROM App\Entity\Citation c
+        WHERE c.content LIKE :name
+        ORDER BY c.content '
+        )->setParameter('name', '%'.$value.'%');
+
+        // returns an array of Product objects
+        return $query->execute();
+    }
 }

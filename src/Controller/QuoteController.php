@@ -34,18 +34,11 @@ class QuoteController extends AbstractController
         $isResponse =false;
         $name = $request->query->get('name');
         if($name != '') {
-            $filterQuotes = array_filter($quotes, function ($item) use ($name) {
-                if (stripos(strtolower($item['content']), strtolower($name)) !== false) {
-                    return true;
-                }
-                return false;
-            });
-            if(!empty($filterQuotes)) $isResponse=true;
-
-            $quotes=[];
-            if($isResponse) $quotes=$filterQuotes;
+            $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAllbyContent($name);
+            if (isset($quotes) || !empty($quotes)) {
+                $isResponse = true;
+            }
         }
-
 
         return $this->render('quotes.html.twig', [
             'quotes' => $quotes,'result'=>$isResponse,'query'=>$name
