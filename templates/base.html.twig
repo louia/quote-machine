@@ -5,6 +5,16 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <style>
+        .button.is-rounded {
+            box-shadow: 0 0.5rem 1rem 0 rgba(112, 109, 109, 0.2) !important;
+            transition-duration: 200ms !important;
+        }
+
+        .button.is-rounded:hover {
+            transform: translateY(-.50rem) !important;
+        }
+    </style>
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
@@ -32,7 +42,7 @@
                 <p class="control has-icons-right">
                     <input class="input" type="search" placeholder="Search...">
                     <span class="icon is-small is-right">
-                        <icon />
+                        <icon/>
                     </span>
                 </p>
             </div>
@@ -65,7 +75,7 @@
         if ($navbarBurgers.length > 0) {
 
             // Add a click event on each of them
-            $navbarBurgers.forEach( el => {
+            $navbarBurgers.forEach(el => {
                 el.addEventListener('click', () => {
 
                     // Get the target from the "data-target" attribute
