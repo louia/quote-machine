@@ -7,6 +7,7 @@ use App\Entity\Citation;
 use App\Form\QuoteType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -21,6 +22,22 @@ class QuoteController extends AbstractController
         return $this->redirectToRoute('quotes');
     }
 
+    /**
+     * @Route("/quotes/random", name="randomQuote")
+     */
+    public function randomQuote()
+    {
+        $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAll();
+
+        if(sizeof($quotes) >=2){
+            $quote = $quotes[rand(0,(sizeof($quotes)-1))];
+        }
+
+        return $this->render('random_quotes.html.twig', [
+            'quote' => $quote
+        ]);
+    }
+
 
     /**
      * @Route("/quotes", name="quotes")
@@ -31,6 +48,10 @@ class QuoteController extends AbstractController
     {
 
         $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAll();
+
+        $session = new Session();
+        if(sizeof($quotes)>=2) $session->set('random', 'true');
+        else $session->set('random', 'false');
 
         $isResponse =false;
         $name = $request->query->get('name');
