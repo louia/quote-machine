@@ -25,10 +25,16 @@ Créer la base de donnée avec la commande :
 php bin/console doctrine:database:create
 ```
 <br>
-Installer la base de données avec la commande :
+Installer la base de donnée avec la commande :
 
 ```sh
 php bin/console doctrine:migrations:migrate
+```
+<br>
+Nourrir la base de donnée avec la commande :
+
+```sh
+php bin/console doctrine:fixtures:load
 ```
 <br>
 
