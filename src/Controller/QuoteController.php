@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Categorie;
 use App\Entity\Citation;
 use App\Form\QuoteType;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,6 +73,7 @@ class QuoteController extends AbstractController
      */
     public function new(Request $request)
     {
+
         $quote = new Citation();
         $form = $this->createForm(QuoteType::class,$quote);
         $entityManager = $this->getDoctrine()->getManager();
@@ -80,10 +82,11 @@ class QuoteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $quote = $form->getData();
-            $entityManager->persist($quote);
-            $entityManager->flush();
+            dump($quote);
+//            $entityManager->persist($quote);
+//            $entityManager->flush();
 
-            return $this->redirectToRoute('quotes');
+//            return $this->redirectToRoute('quotes');
         }
 
 

@@ -2,7 +2,10 @@
 // src/Form/TaskType.php
 namespace App\Form;
 
+use App\Entity\Categorie;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,6 +26,12 @@ class QuoteType extends AbstractType
                 'label'=>'Les métadonées',
                 'required' => true,
             ],)
+            ->add('categorie', EntityType::class, [
+                'class' => Categorie::class,
+                'choice_label' => 'name',
+                'multiple'=>true,
+                'expanded'=>true,
+            ])
             ->add('save', SubmitType::class, ['label' => 'Envoyer'])
         ;
     }

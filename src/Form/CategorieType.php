@@ -13,7 +13,7 @@ class CategorieType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('citations')
+//            ->add('citations')
         ;
     }
 
