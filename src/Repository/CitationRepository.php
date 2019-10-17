@@ -69,4 +69,18 @@ class CitationRepository extends ServiceEntityRepository
         // returns an array of Product objects
         return $query->execute();
     }
+
+    public function getRandomquote(): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT c 
+                FROM App\Entity\Citation c
+                ORDER BY RAND()'
+        )->setMaxResults(1);
+
+        // returns an array of Product objects
+        return $query->execute();
+    }
 }

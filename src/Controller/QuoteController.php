@@ -28,11 +28,7 @@ class QuoteController extends AbstractController
      */
     public function randomQuote()
     {
-        $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAll();
-
-        if(sizeof($quotes) >=2){
-            $quote = $quotes[rand(0,(sizeof($quotes)-1))];
-        }
+        $quote = $this->getDoctrine()->getRepository(Citation::class)->getRandomquote()[0];
 
         return $this->render('random_quotes.html.twig', [
             'quote' => $quote

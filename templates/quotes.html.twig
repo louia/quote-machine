@@ -21,18 +21,17 @@
                     </div>
                 </form>
             {% endif %}
-            <br>
-
-            {% if result == 'true' %}
-                <a class="button is-danger" href="{{ path('quotes') }}">Retour</a>
-            {% elseif result != 'true' and query != '' %}
+<br>
+            {% if result != 'true' and query != '' %}
                 <p>Aucun résultat ne correspond à {{ query }}</p>
             {% endif %}
 
+
             {% if quotes|length > 0 %}
+
                 {% for quote in quotes %}
                     {% if loop.index0 is divisible by(3) %}
-                        <div class="tile is-ancestor" id="{{loop.index0}}">
+                        <div class="tile is-ancestor">
                     {% endif %}
                     <div class="tile is-parent" data-aos="fade-up">
                         <article class="tile is-child box">
@@ -49,7 +48,7 @@
                         </article>
                     </div>
                 {% if loop.index is divisible by(3) or loop.last %}
-                    </div id="{{loop.index}}">
+                    </div>
                 {% endif %}
                 {% endfor %}
             {% else %}
