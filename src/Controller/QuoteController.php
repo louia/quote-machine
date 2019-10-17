@@ -49,7 +49,7 @@ class QuoteController extends AbstractController
     {
 
         $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAll();
-
+        dump($quotes);
         $session = new Session();
         if(sizeof($quotes)>=2) $session->set('random', 'true');
         else $session->set('random', 'false');
@@ -82,11 +82,10 @@ class QuoteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $quote = $form->getData();
-            dump($quote);
-//            $entityManager->persist($quote);
-//            $entityManager->flush();
+            $entityManager->persist($quote);
+            $entityManager->flush();
 
-//            return $this->redirectToRoute('quotes');
+            return $this->redirectToRoute('quotes');
         }
 
 

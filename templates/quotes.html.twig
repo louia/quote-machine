@@ -7,7 +7,7 @@
     <div class="columns">
         <div class="column">
         </div>
-        <div class="column is-three-fifths">
+        <div class="column is-four-fifths">
             {% if quotes|length > 0 %}
                 <form method="GET" name="name">
                     <div class="field has-addons">
@@ -31,23 +31,26 @@
 
             {% if quotes|length > 0 %}
                 {% for quote in quotes %}
-                    <section class="hero {{ random(['is-primary', 'is-warning','is-light','is-dark','is-success']) }}">
-                        <div class="hero-body">
-                            <div class="container">
-                                <h1 class="title">
-                                    {{ quote.content }}
-                                </h1>
-                                <h2 class="subtitle">
-                                    {{ quote.meta }}
-                                </h2>
-                                <a class="button is-info is-rounded" href="{{ path('quotes_edit',{'id': quote.id}) }}">Modifier
-                                    &nbsp;<i class="far fa-edit"></i></a>
-                                <a class="button is-danger is-rounded"
-                                   href="{{ path('quotes_delete', { 'id': quote.id }) }}">Supprimer &nbsp;<i
-                                            class="fas fa-trash"></i></a>
-                            </div>
-                        </div>
-                    </section>
+                    {% if loop.index0 is divisible by(3) %}
+                        <div class="tile is-ancestor" id="{{loop.index0}}">
+                    {% endif %}
+                    <div class="tile is-parent" data-aos="fade-up">
+                        <article class="tile is-child box">
+                            {% for catg in quote.categorie %}
+                                <span class="tag is-success is-normal">{{catg.name | capitalize}}</span>
+                            {% endfor %}
+                            <p class="title">{{quote.content|capitalize}}</p>
+                            <p class="subtitle">{{quote.meta|capitalize}}</p>
+                            <a class="button is-info is-rounded" href="{{ path('quotes_edit',{'id': quote.id}) }}">Modifier
+                                &nbsp;<i class="far fa-edit"></i></a>
+                            <a class="button is-danger is-rounded"
+                               href="{{ path('quotes_delete', { 'id': quote.id }) }}">Supprimer &nbsp;<i
+                                        class="fas fa-trash"></i></a>
+                        </article>
+                    </div>
+                {% if loop.index is divisible by(3) or loop.last %}
+                    </div id="{{loop.index}}">
+                {% endif %}
                 {% endfor %}
             {% else %}
                 <article class="message is-danger">
