@@ -35,6 +35,23 @@
             <a class="navbar-item" href="{{ path('quotes_new') }}">
                 Ajouter une citation
             </a>
+
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Catégorie
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" href="{{ path('categorie_index') }}">
+                        Toutes les catégories
+                    </a>
+                    <hr class="navbar-divider">
+                    <a class="navbar-item" href="{{ path('categorie_new') }}">
+                        Ajouter une catégorie
+                    </a>
+                </div>
+            </div>
+
             {% set random = app.session.get('random') %}
             {% if random == 'true' %}
                 <a class="navbar-item" href="{{ path('randomQuote') }}">

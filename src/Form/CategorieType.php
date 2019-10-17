@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Categorie;
+use App\Entity\Citation;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,7 +15,13 @@ class CategorieType extends AbstractType
     {
         $builder
             ->add('name')
-//            ->add('citations')
+            ->add('citations', EntityType::class, [
+                'class' => Citation::class,
+                'choice_label' => 'meta',
+                'multiple'=>true,
+                'expanded'=>true,
+                'by_reference'=>false
+            ])
         ;
     }
 

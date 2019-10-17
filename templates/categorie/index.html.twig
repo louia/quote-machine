@@ -1,36 +1,45 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
 
-{% block title %}Categorie index{% endblock %}
+{% block title %}Toutes les catégories{% endblock %}
+{% block hero %}Toutes les catégories{% endblock %}
 
 {% block body %}
-    <h1>Categorie index</h1>
+    <div class="columns">
+        <div class="column">
+        </div>
+        <div class="column is-two-thirds">
+            <a class="button is-success is-rounded " href="{{ path('categorie_new') }}">Ajouter une catégorie &nbsp;<i class="fas fa-plus-circle"></i></a>
+            <hr>
+            {% if categories|length > 0 %}
+                {% for categorie in categories %}
+                    <article class="message">
+                        <div class="message-body is-size-5">
+                             Catégorie <strong>{{categorie.name }}</strong>
+                            <div class="is-pulled-right">
+                                <a class="button is-info " href="{{ path('categorie_show',{'id': categorie.id}) }}">Détail
+                                    &nbsp;<i class="far fa-eye"></i></a>
+                            <a class="button is-info is-rounded" href="{{ path('categorie_edit',{'id': categorie.id}) }}">Modifier
+                                &nbsp;<i class="far fa-edit"></i></a>
+                            <a class="button is-danger is-rounded"
+                               href="{{ path('categorie_delete', { 'id': categorie.id }) }}">Supprimer &nbsp;<i
+                                        class="fas fa-trash"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <article class="message is-danger">
+                    <div class="message-body">
+                        Aucune catégorie n'a été trouvé. Veuillez ajouter une catégorie pour la voir apparaitre.
+                    </div>
+                </article>
+            {% endif %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for categorie in categories %}
-            <tr>
-                <td>{{ categorie.id }}</td>
-                <td>{{ categorie.name }}</td>
-                <td>
-                    <a href="{{ path('categorie_show', {'id': categorie.id}) }}">show</a>
-                    <a href="{{ path('categorie_edit', {'id': categorie.id}) }}">edit</a>
-                    <a href="{{ path('categorie_delete', {'id': categorie.id}) }}">delete</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        </div>
+        <div class="column">
+        </div>
+    </div>
 
-    <a href="{{ path('categorie_new') }}">Create new</a>
+
+
 {% endblock %}

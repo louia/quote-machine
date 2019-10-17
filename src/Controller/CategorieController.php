@@ -43,13 +43,12 @@ class CategorieController extends AbstractController
             foreach ($categorie->getCitations() as $citation){
                 $categorie->addCitation($citation);
             }
-//            $categorie->addCitation($categorie->)
 
 
             $entityManager->persist($categorie);
             $entityManager->flush();
 
-//            return $this->redirectToRoute('categorie_index');
+            return $this->redirectToRoute('categorie_index');
         }
 
         return $this->render('categorie/new.html.twig', [
@@ -89,9 +88,9 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="categorie_delete")
+     * @Route("/{id}/delete", name="categorie_delete")
      */
-    public function delete(Request $request, Categorie $categorie): Response
+    public function delete(Categorie $categorie): Response
     {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($categorie);

@@ -1,11 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Categorie{% endblock %}
+{% block title%}Nouvelle Catégorie{% endblock %}
+{% block hero %}Nouvelle catégorie{% endblock %}
 
 {% block body %}
-    <h1>Create new Categorie</h1>
+    <div class="columns">
+        <div class="column">
+        </div>
+        <div class="column is-three-fifths">
 
-    {{ include('categorie/_form.html.twig') }}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="button is-success" name="submit" type="submit">Créer</button>
+            {{ form_end(form) }}
+        </div>
+        <div class="column">
+        </div>
+    </div>
 
-    <a href="{{ path('categorie_index') }}">back to list</a>
 {% endblock %}
