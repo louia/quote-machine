@@ -52,6 +52,11 @@ class Categorie
         return $this;
     }
 
+    public function countCitation()
+    {
+        return $this->citations->count();
+    }
+
     /**
      * @return Collection|Citation[]
      */

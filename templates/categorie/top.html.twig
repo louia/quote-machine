@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title%}Top des catégories{% endblock %}
+{% block hero %}Top des catégories{% endblock %}
+{% block body %}
+    <div class="columns">
+        <div class="column">
+        </div>
+        <div class="column is-three-fifths">
+            <div class="content">
+                <ul>
+                    {% if categories|length > 0 %}
+                        {% for categorie in categories %}
+                            <li class="is-size-4">
+                                <a href="{{ path('categorie_show', { 'id': categorie.id }) }}">{{ categorie.name }}</a> avec {{ categorie.nb }} citations.
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <article class="message is-danger">
+                            <div class="message-body">
+                                Aucune catégorie n'a été trouvé. Veuillez ajouter une catégorie pour la voir apparaitre dans le top.
+                            </div>
+                        </article>
+                    {% endif %}
+                </ul>
+            </div>
+
+        </div>
+        <div class="column">
+        </div>
+    </div>
+
+{% endblock %}

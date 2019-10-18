@@ -19,6 +19,24 @@ class CategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, Categorie::class);
     }
 
+    public function findTopCatg()
+    {
+        $entityManager = $this->getEntityManager();
+//        SELECT c
+//        FROM App\Entity\Citation c
+//        WHERE c.content LIKE :name
+//        ORDER BY c.content
+        $query = $entityManager->createQuery(
+            'SELECT COUNT(categorie_id) ,name
+                    FROM citation_categorie cc,categorie c
+                    WHERE categorie_id=id
+                    GROUP BY categorie_id'
+        );
+
+        // returns an array of Product objects
+        return $query->execute();
+    }
+
     // /**
     //  * @return Categorie[] Returns an array of Categorie objects
     //  */

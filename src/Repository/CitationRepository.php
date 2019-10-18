@@ -54,7 +54,25 @@ class CitationRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getCatgWithCitation(){
+//        $qb = $entityManager->createQueryBuilder();
+//        $qb->select('count(account.id)');
+//        $qb->from('ZaysoCoreBundle:Account','account');
+//
+//        $count = $qb->getQuery()->getSingleScalarResult();
 
+
+        $qb = $this->createQueryBuilder('c')
+            ->Select('COUNT(c) as count, cc.name')
+            ->innerJoin('App\Entity\Categorie', 'cc')
+            ->addGroupBy('cc.id');
+
+
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
     public function findAllbyContent($value): array
     {
         $entityManager = $this->getEntityManager();

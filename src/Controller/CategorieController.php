@@ -27,6 +27,26 @@ class CategorieController extends AbstractController
     }
 
     /**
+     * @Route("/topCategorie", name="categorie_top", methods={"GET"})
+     */
+    public function test()
+    {
+        $res = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
+        $formated=[];
+        foreach ($res as $re){
+            $formated[] = [
+                "nb"=>$re->countCitation(),
+                "name"=>$re->getName(),
+                "id"=>$re->getId()
+            ];
+        }
+        return $this->render('categorie/top.html.twig', [
+            'categories' => $formated,
+        ]);
+
+    }
+
+    /**
      * @Route("/new", name="categorie_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -92,9 +112,9 @@ class CategorieController extends AbstractController
      */
     public function delete(Categorie $categorie): Response
     {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($categorie);
-            $entityManager->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($categorie);
+        $entityManager->flush();
 
 
         return $this->redirectToRoute('categorie_index');
