@@ -44,9 +44,9 @@
                             {% endfor %}
                             <p class="title">{{quote.content|capitalize}}</p>
                             <p class="subtitle">{{quote.meta|capitalize}}</p>
-                            <a class="button is-info is-rounded" href="{{ path('quotes_edit',{'id': quote.id}) }}">Modifier
+                            <a class="button is-info is-rounded " href="{{ path('quotes_edit',{'id': quote.id}) }}">Modifier
                                 &nbsp;<i class="far fa-edit"></i></a>
-                            <a class="button is-danger is-rounded"
+                            <a class="button is-danger is-rounded is-light"
                                href="{{ path('quotes_delete', { 'id': quote.id }) }}">Supprimer &nbsp;<i
                                         class="fas fa-trash"></i></a>
                         </article>
