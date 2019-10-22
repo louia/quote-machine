@@ -29,7 +29,7 @@ class CategorieController extends AbstractController
     /**
      * @Route("/topCategorie", name="categorie_top", methods={"GET"})
      */
-    public function test()
+    public function topCatg()
     {
         $res = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
         $formated=[];

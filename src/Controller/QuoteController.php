@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Faker;
 
 
 class QuoteController extends AbstractController
@@ -22,6 +23,15 @@ class QuoteController extends AbstractController
     public function indexBis()
     {
         return $this->redirectToRoute('quotes');
+    }
+
+    /**
+     * @Route("/test", name="test")
+     */
+    public function test()
+    {
+
+        return new Response("<body>...</body>");
     }
 
     /**
