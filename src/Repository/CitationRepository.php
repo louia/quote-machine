@@ -26,6 +26,25 @@ class CitationRepository extends ServiceEntityRepository
         return $this->findBy(array(), array('content' => 'ASC'));
     }
 
+    public function findAllWithPaginator($paginator,$request)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT c
+        FROM App\Entity\Citation c
+        ORDER BY c.content '
+        );
+
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            5 /*limit per page*/
+        );
+        return $pagination;
+//        return $query->execute();
+    }
+
     // /**
     //  * @return Citation[] Returns an array of Citation objects
     //  */
@@ -54,26 +73,8 @@ class CitationRepository extends ServiceEntityRepository
         ;
     }
     */
-    public function getCatgWithCitation(){
-//        $qb = $entityManager->createQueryBuilder();
-//        $qb->select('count(account.id)');
-//        $qb->from('ZaysoCoreBundle:Account','account');
-//
-//        $count = $qb->getQuery()->getSingleScalarResult();
 
-
-        $qb = $this->createQueryBuilder('c')
-            ->Select('COUNT(c) as count, cc.name')
-            ->innerJoin('App\Entity\Categorie', 'cc')
-            ->addGroupBy('cc.id');
-
-
-
-        $query = $qb->getQuery();
-
-        return $query->execute();
-    }
-    public function findAllbyContent($value): array
+    public function findAllbyContent($value,$paginator,$request)
     {
         $entityManager = $this->getEntityManager();
 
@@ -84,8 +85,13 @@ class CitationRepository extends ServiceEntityRepository
         ORDER BY c.content '
         )->setParameter('name', '%'.$value.'%');
 
-        // returns an array of Product objects
-        return $query->execute();
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            5 /*limit per page*/
+        );
+        return $pagination;
+
     }
 
     public function getRandomquote(): array

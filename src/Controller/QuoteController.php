@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Categorie;
 use App\Entity\Citation;
 use App\Form\QuoteType;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -41,26 +42,23 @@ class QuoteController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request,PaginatorInterface $paginator)
     {
 
-        $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAll();
+        $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAllWithPaginator($paginator,$request);
+
         dump($quotes);
         $session = new Session();
         if(sizeof($quotes)>=2) $session->set('random', 'true');
         else $session->set('random', 'false');
 
-        $isResponse =false;
         $name = $request->query->get('name');
         if($name != '') {
-            $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAllbyContent($name);
-            if (isset($quotes) || !empty($quotes)) {
-                $isResponse = true;
-            }
+            $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAllbyContent($name,$paginator,$request);
         }
 
         return $this->render('quotes.html.twig', [
-            'quotes' => $quotes,'result'=>$isResponse,'query'=>$name
+            'pagination' => $quotes,'query'=>$name
         ]);
     }
 

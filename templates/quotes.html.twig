@@ -8,7 +8,7 @@
         <div class="column">
         </div>
         <div class="column is-four-fifths">
-            {% if quotes|length > 0 %}
+            {% if (query != '' and pagination.getTotalItemCount == 0) or pagination.getTotalItemCount > 0 %}
                 <form method="GET" name="name">
                     <div class="field has-addons">
                         <div class="control">
@@ -21,15 +21,19 @@
                     </div>
                 </form>
             {% endif %}
-<br>
-            {% if result != 'true' and query != '' %}
-                <p>Aucun résultat ne correspond à {{ query }}</p>
+            <br>
+
+            {% if pagination.getTotalItemCount == 0 and query != '' %}
+                <article class="message is-danger">
+                    <div class="message-body">
+                        Aucun résultat ne correspond à <strong> {{ query }}</strong>.
+                    </div>
+                </article>
             {% endif %}
 
 
-            {% if quotes|length > 0 %}
-
-                {% for quote in quotes %}
+            {% if pagination.getTotalItemCount > 0 %}
+                {% for quote in pagination %}
                     {% if loop.index0 is divisible by(3) %}
                         <div class="tile is-ancestor">
                     {% endif %}
@@ -47,23 +51,23 @@
                                         class="fas fa-trash"></i></a>
                         </article>
                     </div>
-                {% if loop.index is divisible by(3) or loop.last %}
-                    </div>
-                {% endif %}
+                    {% if loop.index is divisible by(3) or loop.last %}
+                        </div>
+                    {% endif %}
                 {% endfor %}
-            {% else %}
+            {% elseif pagination.getTotalItemCount == 0 and query== ''  %}
                 <article class="message is-danger">
                     <div class="message-body">
                         Aucune citation n'a été trouvé. Veuillez ajouter une citation pour la voir apparaitre.
                     </div>
                 </article>
             {% endif %}
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
 
         </div>
         <div class="column">
         </div>
     </div>
-
-
-
 {% endblock %}
