@@ -9,10 +9,8 @@ use App\Form\QuoteType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Faker;
 
 
 class QuoteController extends AbstractController
@@ -56,11 +54,6 @@ class QuoteController extends AbstractController
     {
 
         $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAllWithPaginator($paginator,$request);
-
-        dump($quotes);
-        $session = new Session();
-        if(sizeof($quotes)>=2) $session->set('random', 'true');
-        else $session->set('random', 'false');
 
         $name = $request->query->get('name');
         if($name != '') {

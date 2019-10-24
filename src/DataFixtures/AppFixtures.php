@@ -43,7 +43,6 @@ class AppFixtures extends Fixture
                     $quote->setContent($fr);
                     $quote->setMeta($data["author"]);
                     $quote->addCategorie($categories[mt_rand(0,14)]);
-
 //                    for ($i = 0; $i < mt_rand(0,3); $i++) {
 //                        $quote->addCategorie($categories[mt_rand(0,14)]);
 //                    }

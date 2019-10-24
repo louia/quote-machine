@@ -31,13 +31,13 @@ class CategorieController extends AbstractController
      */
     public function topCatg()
     {
-        $res = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
+        $categories = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
         $formated=[];
-        foreach ($res as $re){
+        foreach ($categories as $categorie){
             $formated[] = [
-                "nb"=>$re->countCitation(),
-                "name"=>$re->getName(),
-                "id"=>$re->getId()
+                "nb"=>$categorie->countCitation(),
+                "name"=>$categorie->getName(),
+                "id"=>$categorie->getId()
             ];
         }
         return $this->render('categorie/top.html.twig', [
@@ -58,12 +58,6 @@ class CategorieController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            dump($categorie->getCitations());
-
-            foreach ($categorie->getCitations() as $citation){
-                $categorie->addCitation($citation);
-            }
-
 
             $entityManager->persist($categorie);
             $entityManager->flush();
