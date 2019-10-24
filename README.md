@@ -11,6 +11,7 @@
 
 ```sh
 composer install
+npm install
 ```
 
 ## Usage
@@ -40,11 +41,11 @@ php bin/console doctrine:fixtures:load
 Installer webpackEncore :
 
 ```sh
-npm install
 npm run dev
 ```
 <br>
 Fixer le code
+
 Sous linux :
 
 ```sh
