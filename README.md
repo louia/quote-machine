@@ -37,6 +37,13 @@ Nourrir la base de donnée avec la commande :
 php bin/console doctrine:fixtures:load
 ```
 <br>
+Installer webpackEncore :
+
+```sh
+npm install
+npm run dev
+```
+<br>
 
 Lancer le serveur à l'aide de la commande :
 ```sh
