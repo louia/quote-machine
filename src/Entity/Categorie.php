@@ -32,16 +32,24 @@ class Categorie
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Vich\UploadableField(mapping="categorie", fileNameProperty="imageName")
+     *
      * @var File
      */
     private $imageFile;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", nullable=true,length=255)
      *
      * @var string
      */
     private $imageName;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Citation", mappedBy="categorie")
@@ -104,7 +112,6 @@ class Categorie
     {
         return $this->imageName;
     }
-
 
     public function countCitation()
     {

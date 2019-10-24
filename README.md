@@ -44,6 +44,17 @@ npm install
 npm run dev
 ```
 <br>
+Fixer le code
+Sous linux :
+
+```sh
+./vendor/bin/php-cs-fixer fix
+``
+Sous windows : 
+```sh
+vendor\bin\php-cs-fixer fix
+```
+<br>
 
 Lancer le serveur à l'aide de la commande :
 ```sh
