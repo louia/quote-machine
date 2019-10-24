@@ -1,0 +1,14 @@
+parameters:
+  tasks:
+    # Vérifie que le fichier composer.lock est à jour
+    composer:
+      no_check_all: true
+      no_check_publish: true
+    git_blacklist:
+      keywords:
+        - "die("
+        - "var_dump("
+        - "dump("
+    # Éxecute PHP-CS-Fixer sans "fixer" les fichiers
+    phpcsfixer2:
+      config: .php_cs.dist

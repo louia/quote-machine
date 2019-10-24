@@ -18,9 +18,9 @@ class CategorieType extends AbstractType
             ->add('citations', EntityType::class, [
                 'class' => Citation::class,
                 'choice_label' => 'meta',
-                'multiple'=>true,
-                'expanded'=>true,
-                'by_reference'=>false
+                'multiple' => true,
+                'expanded' => true,
+                'by_reference' => false,
             ])
         ;
     }

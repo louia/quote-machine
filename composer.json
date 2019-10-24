@@ -28,10 +28,13 @@
         "symfony/twig-bundle": "4.3.*",
         "symfony/validator": "4.3.*",
         "symfony/web-link": "4.3.*",
-        "symfony/yaml": "4.3.*"
+        "symfony/yaml": "4.3.*",
+        "vich/uploader-bundle": "^1.10"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.2",
+        "friendsofphp/php-cs-fixer": "^2.15",
+        "phpro/grumphp": "^0.16.1",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",

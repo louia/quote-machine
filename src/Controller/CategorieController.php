@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Categorie;
-use App\Entity\Citation;
 use App\Form\CategorieType;
 use App\Repository\CategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,18 +31,18 @@ class CategorieController extends AbstractController
     public function topCatg()
     {
         $categories = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
-        $formated=[];
-        foreach ($categories as $categorie){
+        $formated = [];
+        foreach ($categories as $categorie) {
             $formated[] = [
-                "nb"=>$categorie->countCitation(),
-                "name"=>$categorie->getName(),
-                "id"=>$categorie->getId()
+                'nb' => $categorie->countCitation(),
+                'name' => $categorie->getName(),
+                'id' => $categorie->getId(),
             ];
         }
+
         return $this->render('categorie/top.html.twig', [
             'categories' => $formated,
         ]);
-
     }
 
     /**
@@ -109,7 +108,6 @@ class CategorieController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($categorie);
         $entityManager->flush();
-
 
         return $this->redirectToRoute('categorie_index');
     }

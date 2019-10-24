@@ -1,4 +1,5 @@
 <?php
+
 // src/Controller/HelloWorldController.php
 
 namespace App\Controller;
@@ -6,7 +7,6 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 
 class HelloWorldController extends AbstractController
 {
@@ -25,9 +25,8 @@ class HelloWorldController extends AbstractController
     {
 //                                  return new Response('<html><body>Hello '.$page.' ! </body></html>');
 
-
         return $this->render('helloWorldV2.html.twig', [
-            'pnom' => $page
+            'pnom' => $page,
         ]);
     }
 }

@@ -23,10 +23,10 @@ class CitationRepository extends ServiceEntityRepository
      */
     public function findAll()
     {
-        return $this->findBy(array(), array('content' => 'ASC'));
+        return $this->findBy([], ['content' => 'ASC']);
     }
 
-    public function findAllWithPaginator($paginator,$request)
+    public function findAllWithPaginator($paginator, $request)
     {
         $entityManager = $this->getEntityManager();
 
@@ -41,6 +41,7 @@ class CitationRepository extends ServiceEntityRepository
             $request->query->getInt('page', 1), /*page number*/
             5 /*limit per page*/
         );
+
         return $pagination;
 //        return $query->execute();
     }
@@ -74,7 +75,7 @@ class CitationRepository extends ServiceEntityRepository
     }
     */
 
-    public function findAllbyContent($value,$paginator,$request)
+    public function findAllbyContent($value, $paginator, $request)
     {
         $entityManager = $this->getEntityManager();
 
@@ -90,8 +91,8 @@ class CitationRepository extends ServiceEntityRepository
             $request->query->getInt('page', 1), /*page number*/
             5 /*limit per page*/
         );
-        return $pagination;
 
+        return $pagination;
     }
 
     public function getRandomquote(): array

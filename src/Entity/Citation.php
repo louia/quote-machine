@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CitationRepository")
  */
@@ -99,7 +98,8 @@ class Citation
         return $this;
     }
 
-    public function __toString(){
+    public function __toString()
+    {
         // to show the name of the Category in the select
         return $this->content;
         // to show the id of the Category in the select
