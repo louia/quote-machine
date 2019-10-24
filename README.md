@@ -49,7 +49,7 @@ Sous linux :
 
 ```sh
 ./vendor/bin/php-cs-fixer fix
-``
+```
 Sous windows : 
 ```sh
 vendor\bin\php-cs-fixer fix
