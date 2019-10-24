@@ -17,7 +17,9 @@
 
             {% if categorie.citations | length >0 %}
             <h2 class="subtitle">{% if categorie.citations | length <=1 %}Citation{% else %}Citations{% endif %} qui utilise la catégorie :</h2>
-            {% for cit in categorie.citations %}
+                <img src="{{ vich_uploader_asset(categorie, 'imageFile') }}" alt="{{ categorie.name }}" />
+
+                {% for cit in categorie.citations %}
                 <div class="tags has-addons">
                     <span class="tag is-medium is-light">{{ cit.content | slice(0,50) }}</span>
                     <span class="tag is-medium is-dark">{{cit.meta}}</span>
