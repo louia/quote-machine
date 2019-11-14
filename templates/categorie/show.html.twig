@@ -8,10 +8,10 @@
         <div class="column">
         </div>
         <div class="column is-three-fifths">
-            <a class="button is-info is-rounded" href="{{ path('categorie_edit',{'id': categorie.id}) }}">Modifier
+            <a class="button is-info is-rounded" href="{{ path('categorie_edit',{'slug': categorie.slug}) }}">Modifier
                 &nbsp;<i class="far fa-edit"></i></a>
             <a class="button is-danger is-rounded"
-               href="{{ path('categorie_delete', { 'id': categorie.id }) }}">Supprimer &nbsp;<i
+               href="{{ path('categorie_delete', { 'slug': categorie.slug }) }}">Supprimer &nbsp;<i
                         class="fas fa-trash"></i></a>
             <h1 class="title">Nom de la catégorie : {{ categorie.name }}</h1>
 

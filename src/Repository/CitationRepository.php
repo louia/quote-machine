@@ -28,13 +28,7 @@ class CitationRepository extends ServiceEntityRepository
 
     public function findAllWithPaginator($paginator, $request)
     {
-        $entityManager = $this->getEntityManager();
-
-        $query = $entityManager->createQuery(
-            'SELECT c
-        FROM App\Entity\Citation c
-        ORDER BY c.content '
-        );
+        $query = $this->createQueryBuilder('c')->orderBy('c.content')->getQuery();
 
         $pagination = $paginator->paginate(
             $query, /* query NOT result */
@@ -43,7 +37,6 @@ class CitationRepository extends ServiceEntityRepository
         );
 
         return $pagination;
-//        return $query->execute();
     }
 
     // /**

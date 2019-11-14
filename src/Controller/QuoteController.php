@@ -7,10 +7,10 @@ namespace App\Controller;
 use App\Entity\Citation;
 use App\Form\QuoteType;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class QuoteController extends AbstractController
 {
@@ -20,14 +20,6 @@ class QuoteController extends AbstractController
     public function indexBis()
     {
         return $this->redirectToRoute('quotes');
-    }
-
-    /**
-     * @Route("/test", name="test")
-     */
-    public function test()
-    {
-        return new Response('<body>...</body>');
     }
 
     /**
@@ -44,8 +36,6 @@ class QuoteController extends AbstractController
 
     /**
      * @Route("/quotes", name="quotes")
-     *
-     * @param Request $request
      *
      * @return Response
      */

@@ -16,12 +16,12 @@
                         <div class="message-body is-size-5">
                              Catégorie <strong>{{categorie.name }}</strong>
                             <div class="is-pulled-right">
-                                <a class="button is-info " href="{{ path('categorie_show',{'id': categorie.id}) }}">Détail
+                                <a class="button is-info " href="{{ path('categorie_show',{'slug': categorie.slug}) }}">Détail
                                     &nbsp;<i class="far fa-eye"></i></a>
-                            <a class="button is-info is-rounded" href="{{ path('categorie_edit',{'id': categorie.id}) }}">Modifier
+                            <a class="button is-info is-rounded" href="{{ path('categorie_edit',{'slug': categorie.slug}) }}">Modifier
                                 &nbsp;<i class="far fa-edit"></i></a>
                             <a class="button is-danger is-rounded"
-                               href="{{ path('categorie_delete', { 'id': categorie.id }) }}">Supprimer &nbsp;<i
+                               href="{{ path('categorie_delete', { 'slug': categorie.slug }) }}">Supprimer &nbsp;<i
                                         class="fas fa-trash"></i></a>
                             </div>
                         </div>

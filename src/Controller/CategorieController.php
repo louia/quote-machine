@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Categorie;
 use App\Form\CategorieType;
 use App\Repository\CategorieRepository;
+use App\Util\Slugger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +49,7 @@ class CategorieController extends AbstractController
     /**
      * @Route("/new", name="categorie_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Slugger $slugger): Response
     {
         $categorie = new Categorie();
 
@@ -71,7 +72,7 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="categorie_show", methods={"GET"})
+     * @Route("/{slug}", name="categorie_show", methods={"GET"})
      */
     public function show(Categorie $categorie): Response
     {
@@ -81,7 +82,7 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="categorie_edit", methods={"GET","POST"})
+     * @Route("/{slug}/edit", name="categorie_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Categorie $categorie): Response
     {
@@ -101,7 +102,7 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/delete", name="categorie_delete")
+     * @Route("/{slug}/delete", name="categorie_delete")
      */
     public function delete(Categorie $categorie): Response
     {

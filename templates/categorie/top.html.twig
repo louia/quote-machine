@@ -12,7 +12,7 @@
                     {% if categories|length > 0 %}
                         {% for categorie in categories %}
                             <li class="is-size-4">
-                                <a href="{{ path('categorie_show', { 'id': categorie.id }) }}">{{ categorie.name }}</a> avec {{ categorie.nb }} citations.
+                                <a href="{{ path('categorie_show', { 'slug': categorie.slug }) }}">{{ categorie.name }}</a> avec {{ categorie.nb }} citations.
                             </li>
                         {% endfor %}
                     {% else %}

@@ -6,8 +6,8 @@ use App\Entity\Categorie;
 use App\Entity\Citation;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\HttpClient\HttpClient;
 use Faker;
+use Symfony\Component\HttpClient\HttpClient;
 
 class AppFixtures extends Fixture
 {

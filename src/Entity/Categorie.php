@@ -2,16 +2,19 @@
 
 namespace App\Entity;
 
+use App\Util\Slugger;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategorieRepository")
  * @Vich\Uploadable
+ * @UniqueEntity("slug")
  */
 class Categorie
 {
@@ -56,6 +59,11 @@ class Categorie
      */
     private $citations;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->citations = new ArrayCollection();
@@ -74,6 +82,7 @@ class Categorie
     public function setName(string $name): self
     {
         $this->name = $name;
+        $this->setSlug(Slugger::slugify($name));
 
         return $this;
     }
@@ -152,5 +161,17 @@ class Categorie
         return $this->name;
         // to show the id of the Category in the select
         // return $this->id;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }
