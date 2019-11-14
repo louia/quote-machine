@@ -38,6 +38,7 @@ class CategorieController extends AbstractController
                 'nb' => $categorie->countCitation(),
                 'name' => $categorie->getName(),
                 'id' => $categorie->getId(),
+                'slug' => $categorie->getSlug(),
             ];
         }
 
