@@ -12,6 +12,7 @@
 ```sh
 composer install
 npm install
+npm run dev
 ```
 
 ## Usage
@@ -53,6 +54,7 @@ php bin/console server:start
 Aller à l'adresse : [http://127.0.0.1:8000](http://127.0.0.1:8000/)
 
 ##Test
+
 Supprime, crée et met à niveau le schéma de la base de données de test puis exécute les tests
 ```sh
 composer test

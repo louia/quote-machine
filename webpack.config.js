@@ -23,6 +23,7 @@ Encore
      * and one CSS file (e.g. app.scss) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/js/app.js')
+
     // .addStyleEntry("app", "./assets/css/app.scss")
 
 //.addEntry('page1', './assets/js/page1.js')
