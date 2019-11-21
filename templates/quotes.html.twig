@@ -42,13 +42,17 @@
                             {% for catg in quote.categorie %}
                                 <span class="tag is-success is-normal">{{catg.name | capitalize}}</span>
                             {% endfor %}
+                            <br>
+                            <span class="tag is-warning"> Créé par {{ quote.author.username }}</span>
                             <p class="title">{{quote.content|capitalize}}</p>
                             <p class="subtitle">{{quote.meta|capitalize}}</p>
-                            <a class="button is-info is-rounded " href="{{ path('quotes_edit',{'id': quote.id}) }}">Modifier
-                                &nbsp;<i class="far fa-edit"></i></a>
-                            <a class="button is-danger is-rounded is-light"
-                               href="{{ path('quotes_delete', { 'id': quote.id }) }}">Supprimer &nbsp;<i
-                                        class="fas fa-trash"></i></a>
+                            {% if is_granted('quotes_edit',quote) %}
+                                <a class="button is-info is-rounded " href="{{ path('quotes_edit',{'id': quote.id}) }}">Modifier
+                                    &nbsp;<i class="far fa-edit"></i></a>
+                                <a class="button is-danger is-rounded is-light"
+                                   href="{{ path('quotes_delete', { 'id': quote.id }) }}">Supprimer &nbsp;<i
+                                            class="fas fa-trash"></i></a>
+                            {% endif %}
                         </article>
                     </div>
                     {% if loop.index is divisible by(3) or loop.last %}

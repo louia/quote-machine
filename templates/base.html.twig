@@ -32,9 +32,11 @@
     </div>
     <div class="navbar-menu" id="navMenu">
         <div class="navbar-start">
-            <a class="navbar-item" href="{{ path('quotes_new') }}">
-                Ajouter une citation
-            </a>
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a class="navbar-item" href="{{ path('quotes_new') }}">
+                    Ajouter une citation
+                </a>
+            {% endif %}
 
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
@@ -48,10 +50,12 @@
                     <a class="navbar-item" href="{{ path('categorie_top') }}">
                         Top des catégories
                     </a>
-                    <hr class="navbar-divider">
-                    <a class="navbar-item" href="{{ path('categorie_new') }}">
-                        Ajouter une catégorie
-                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <hr class="navbar-divider">
+                        <a class="navbar-item" href="{{ path('categorie_new') }}">
+                            Ajouter une catégorie
+                        </a>
+                    {% endif %}
                 </div>
             </div>
 
@@ -60,7 +64,20 @@
                 Citation aléatoire
             </a>
         </div>
-
+        <div class="navbar-end">
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a class="navbar-item" href="{{ path('app_logout') }}">
+                    {{ app.user.username }}, déconnexion ?
+                </a>
+            {% else %}
+                <a class="navbar-item" href="{{ path('app_login') }}">
+                    Connexion
+                </a>
+                <a class="navbar-item" href="{{ path('app_register') }}">
+                    Inscription
+                </a>
+            {% endif %}
+        </div>
     </div>
 </nav>
 {% set _block = block('hero') %}

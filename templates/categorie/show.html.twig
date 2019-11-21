@@ -8,11 +8,13 @@
         <div class="column">
         </div>
         <div class="column is-three-fifths">
+            {% if is_granted('ROLE_ADMIN') %}
             <a class="button is-info is-rounded" href="{{ path('categorie_edit',{'slug': categorie.slug}) }}">Modifier
                 &nbsp;<i class="far fa-edit"></i></a>
             <a class="button is-danger is-rounded"
                href="{{ path('categorie_delete', { 'slug': categorie.slug }) }}">Supprimer &nbsp;<i
                         class="fas fa-trash"></i></a>
+            {% endif %}
             <h1 class="title">Nom de la catégorie : {{ categorie.name }}</h1>
 
             {% if categorie.imageName != ''  %}

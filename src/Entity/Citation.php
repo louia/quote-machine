@@ -38,6 +38,12 @@ class Citation
      */
     private $categorie;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="citations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
     public function __construct()
     {
         $this->categorie = new ArrayCollection();
@@ -104,5 +110,17 @@ class Citation
         return $this->content;
         // to show the id of the Category in the select
         // return $this->id;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
     }
 }

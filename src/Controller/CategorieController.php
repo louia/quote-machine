@@ -52,6 +52,7 @@ class CategorieController extends AbstractController
      */
     public function new(Request $request, Slugger $slugger): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $categorie = new Categorie();
 
         $form = $this->createForm(CategorieType::class, $categorie);
@@ -83,10 +84,12 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}/edit", name="categorie_edit", methods={"GET","POST"})
+     * @Route("/edit/{slug}", name="categorie_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Categorie $categorie): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);
 
@@ -103,10 +106,11 @@ class CategorieController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}/delete", name="categorie_delete")
+     * @Route("/delete/{slug}", name="categorie_delete")
      */
     public function delete(Categorie $categorie): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($categorie);
         $entityManager->flush();

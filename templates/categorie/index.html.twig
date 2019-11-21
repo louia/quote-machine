@@ -8,21 +8,27 @@
         <div class="column">
         </div>
         <div class="column is-two-thirds">
+            {% if is_granted('ROLE_ADMIN') %}
             <a class="button is-success is-rounded " href="{{ path('categorie_new') }}">Ajouter une catégorie &nbsp;<i class="fas fa-plus-circle"></i></a>
             <hr>
+            {% endif %}
             {% if categories|length > 0 %}
                 {% for categorie in categories %}
                     <article class="message">
                         <div class="message-body is-size-5">
                              Catégorie <strong>{{categorie.name }}</strong>
+
                             <div class="is-pulled-right">
                                 <a class="button is-info " href="{{ path('categorie_show',{'slug': categorie.slug}) }}">Détail
                                     &nbsp;<i class="far fa-eye"></i></a>
-                            <a class="button is-info is-rounded" href="{{ path('categorie_edit',{'slug': categorie.slug}) }}">Modifier
+                                {% if is_granted('ROLE_ADMIN') %}
+
+                                <a class="button is-info is-rounded" href="{{ path('categorie_edit',{'slug': categorie.slug}) }}">Modifier
                                 &nbsp;<i class="far fa-edit"></i></a>
                             <a class="button is-danger is-rounded"
                                href="{{ path('categorie_delete', { 'slug': categorie.slug }) }}">Supprimer &nbsp;<i
                                         class="fas fa-trash"></i></a>
+                                {% endif %}
                             </div>
                         </div>
                     </article>

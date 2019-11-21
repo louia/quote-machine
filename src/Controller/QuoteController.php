@@ -58,7 +58,10 @@ class QuoteController extends AbstractController
      */
     public function new(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $user = $this->getUser();
         $quote = new Citation();
+        $quote->setAuthor($user);
         $form = $this->createForm(QuoteType::class, $quote);
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -82,6 +85,7 @@ class QuoteController extends AbstractController
      */
     public function delete(Citation $quote)
     {
+        $this->denyAccessUnlessGranted('quotes_delete', $quote);
         $entityManager = $this->getDoctrine()->getManager();
 
         $entityManager->remove($quote);
@@ -95,6 +99,7 @@ class QuoteController extends AbstractController
      */
     public function edit(Citation $quote, Request $request)
     {
+        $this->denyAccessUnlessGranted('quotes_edit', $quote);
         $entityManager = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(QuoteType::class, $quote);
