@@ -44,7 +44,7 @@
                             {% endfor %}
                             <br>
                             <span class="tag is-warning"> Créé par {{ quote.author.username }}</span>
-                            <p class="title">{{quote.content|capitalize}}</p>
+                            <p class="title">{{quote.content}}</p>
                             <p class="subtitle">{{quote.meta|capitalize}}</p>
                             {% if is_granted('quotes_edit',quote) %}
                                 <a class="button is-info is-rounded " href="{{ path('quotes_edit',{'id': quote.id}) }}">Modifier
