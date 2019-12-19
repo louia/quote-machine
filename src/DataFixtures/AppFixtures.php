@@ -52,7 +52,10 @@ class AppFixtures extends Fixture
             $categories[] = $categorie;
             $manager->persist($categorie);
         }
-//        $manager->flush();
+        $categorie = new Categorie();
+        $categorie->setName('Voyage');
+        $categories[] = $categorie;
+        $manager->persist($categorie);
 
         $client = HttpClient::create();
         for ($i = 0; $i < 20; ++$i) {
@@ -70,7 +73,7 @@ class AppFixtures extends Fixture
                     $fr = htmlspecialchars_decode($fr, ENT_QUOTES);
                     $quote->setContent($fr);
                     $quote->setMeta($data['author']);
-                    $quote->addCategorie($categories[mt_rand(0, 14)]);
+                    $quote->addCategorie($categories[mt_rand(0, 15)]);
                     $quote->setAuthor($user2);
 //                    for ($i = 0; $i < mt_rand(0,3); $i++) {
 //                        $quote->addCategorie($categories[mt_rand(0,14)]);
@@ -80,7 +83,7 @@ class AppFixtures extends Fixture
                     $quote->setContent($data['content']);
                     $quote->setMeta($data['author']);
                     $quote->setAuthor($user2);
-                    $quote->addCategorie($categories[mt_rand(0, 14)]);
+                    $quote->addCategorie($categories[mt_rand(0, 15)]);
 
                     $manager->persist($quote);
                 }
