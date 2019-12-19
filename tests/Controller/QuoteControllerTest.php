@@ -114,7 +114,6 @@ class QuoteControllerTest extends WebTestCase
             $myQuote = $crawler->filter('p.title')->each(function (Crawler $node, $i) {
                 return $node->text();
             });
-
             for ($ii = 1; $ii <= count($myQuote); ++$ii) {
                 if ($myQuote[$ii - 1] == $cit->getContent()) {
                     $find = $myQuote[$ii - 1];

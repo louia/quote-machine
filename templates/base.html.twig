@@ -32,7 +32,7 @@
     </div>
     <div class="navbar-menu" id="navMenu">
         <div class="navbar-start">
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {% if is_granted('ROLE_USER') %}
                 <a class="navbar-item" href="{{ path('quotes_new') }}">
                     Ajouter une citation
                 </a>
@@ -65,7 +65,7 @@
             </a>
         </div>
         <div class="navbar-end">
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {% if is_granted('ROLE_USER') %}
                 <a class="navbar-item" href="{{ path('app_logout') }}">
                     {{ app.user.username }}, déconnexion ?
                 </a>
