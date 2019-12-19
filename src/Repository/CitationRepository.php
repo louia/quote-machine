@@ -39,6 +39,26 @@ class CitationRepository extends ServiceEntityRepository
         return $pagination;
     }
 
+    public function findAllbyContent($value, $paginator, $request)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT c
+        FROM App\Entity\Citation c
+        WHERE c.content LIKE :name
+        ORDER BY c.content '
+        )->setParameter('name', '%'.$value.'%');
+
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            5 /*limit per page*/
+        );
+
+        return $pagination;
+    }
+
     public function getRandomquote()
     {
         $entityManager = $this->getEntityManager();
