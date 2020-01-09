@@ -15,11 +15,11 @@ class QuoteControllerTest extends WebTestCase
 
     protected function setUp()
     {
-        $kernel = self::bootKernel();
+//        $kernel = self::bootKernel();
 
-        $this->entityManager = $kernel->getContainer()
-            ->get('doctrine')
-            ->getManager();
+//        $this->entityManager = self::$kernel->getContainer()
+//            ->get('doctrine')
+//            ->getManager();
     }
 
     public function testNew()
@@ -38,11 +38,46 @@ class QuoteControllerTest extends WebTestCase
         $form['quote[meta]']->setValue('Louis Chovaneck');
         $client->submit($form);
 
-        $cit = $this->entityManager
-            ->getRepository(Citation::class)
+        $cit = self::$container->get('doctrine')->getManager()->getRepository(Citation::class)
             ->findOneBy(['meta' => 'Louis Chovaneck']);
 
         $this->assertSame('Symfony Rocks!', $cit->getContent());
+    }
+
+    public function testNewEdit()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'louis',
+            'PHP_AUTH_PW' => '1234',
+        ]);
+        $client->followRedirects();
+        $crawler = $client->request('GET', '/quotes/new');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $form = $crawler->selectButton('Envoyer')->form();
+        $form['quote[content]']->setValue('Symfony Rocks!');
+        $form['quote[meta]']->setValue('Louis Chovaneck');
+        $client->submit($form);
+
+        $cit = self::$container->get('doctrine')->getManager()->getRepository(Citation::class)
+            ->findOneBy(['meta' => 'Louis Chovaneck']);
+
+        $crawlerr = $client->request('GET', '/quotes/edit/'.$cit->getId());
+
+        $this->assertResponseIsSuccessful();
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $form = $crawlerr->selectButton('Envoyer')->form();
+        $form['quote[content]']->setValue('Symfony 5.0 Rocks!');
+        $form['quote[meta]']->setValue('Louis Chovaneck');
+        $client->submit($form);
+
+        $cit = self::$container->get('doctrine')->getManager()->getRepository(Citation::class)
+            ->findOneBy(['meta' => 'Louis Chovaneck']);
+
+        $this->assertSame('Symfony 5.0 Rocks!', $cit->getContent());
     }
 
     public function testNewDelete()
@@ -62,8 +97,7 @@ class QuoteControllerTest extends WebTestCase
         $form['quote[meta]']->setValue('Louis Chovaneck');
         $client->submit($form);
 
-        $cit = $this->entityManager
-            ->getRepository(Citation::class)
+        $cit = self::$container->get('doctrine')->getManager()->getRepository(Citation::class)
             ->findOneBy(['meta' => 'Louis Chovaneck']);
 
         $this->assertSame('Symfony Rocks!', $cit->getContent());
@@ -73,8 +107,7 @@ class QuoteControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $cit = $this->entityManager
-            ->getRepository(Citation::class)
+        $cit = self::$container->get('doctrine')->getManager()->getRepository(Citation::class)
             ->findOneBy(['meta' => 'Louis Chovaneck']);
 
         $this->assertSame(null, $cit);
@@ -97,8 +130,7 @@ class QuoteControllerTest extends WebTestCase
         $form['quote[meta]']->setValue('Louis Chovaneck');
         $client->submit($form);
 
-        $cit = $this->entityManager
-            ->getRepository(Citation::class)
+        $cit = self::$container->get('doctrine')->getManager()->getRepository(Citation::class)
             ->findOneBy(['meta' => 'Louis Chovaneck']);
 
         $this->assertSame('Symfony Rocks!', $cit->getContent());
@@ -132,7 +164,7 @@ class QuoteControllerTest extends WebTestCase
         parent::tearDown();
 
         // doing this is recommended to avoid memory leaks
-        $this->entityManager->close();
-        $this->entityManager = null;
+//        $this->entityManager->close();
+//        $this->entityManager = null;
     }
 }

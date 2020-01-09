@@ -65,7 +65,7 @@ class AppFixtures extends Fixture
 
         $client = HttpClient::create();
         for ($i = 0; $i < 20; ++$i) {
-            $response = $client->request('GET', 'https://api.quotable.io/random');
+            $response = $client->request('GET', 'http://api.quotable.io/random');
             if ('200' == $response->getStatusCode()) {
                 $data = json_decode($response->getContent(), true);
 
