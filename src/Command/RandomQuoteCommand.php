@@ -47,13 +47,17 @@ class RandomQuoteCommand extends Command
             $quote = $this->citationRepository->getbyCatg($input->getOption('category'));
             if (count($quote) > 0) {
                 $quote = $quote[0];
+            } else {
+                $io->warning('Aucune citation trouvé pour la catégorie '.$input->getOption('category').' !');
+
+                return 0;
             }
         }
 
         if ($quote) {
             $io->text([$quote->getContent(), $quote->getMeta()]);
         } else {
-            $io->warning('Aucune citation trouvé');
+            $io->warning('Aucune citation trouvé !');
         }
 
         return 0;
