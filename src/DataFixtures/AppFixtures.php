@@ -25,6 +25,7 @@ class AppFixtures extends Fixture
         $user1 = new User();
         $user1->setEmail('test@gmail.com');
         $user1->setUsername('louis');
+        $user1->setDateAdd();
 
         $password = $this->encoder->encodePassword($user1, '1234');
         $user1->setPassword($password);
@@ -32,6 +33,7 @@ class AppFixtures extends Fixture
         $manager->persist($user1);
 
         $user2 = new User();
+        $user2->setDateAdd();
         $user2->setEmail('admin@gmail.com');
         $user2->setUsername('admin');
         $user2->setRoles([

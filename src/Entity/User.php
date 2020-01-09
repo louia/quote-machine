@@ -49,6 +49,11 @@ class User implements UserInterface
      */
     private $citations;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateAdd;
+
     public function __construct()
     {
         $this->citations = new ArrayCollection();
@@ -166,6 +171,18 @@ class User implements UserInterface
                 $citation->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateAdd(): ?\DateTimeInterface
+    {
+        return $this->dateAdd;
+    }
+
+    public function setDateAdd(): self
+    {
+        $this->dateAdd = new \DateTimeImmutable();
 
         return $this;
     }

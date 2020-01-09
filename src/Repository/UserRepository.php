@@ -19,6 +19,34 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function getAllCitationByuser($id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT COUNT(c)
+        FROM App\Entity\Citation c
+        WHERE c.author = :name
+        ORDER BY c.date_add DESC'
+        )->setParameter('name', $id);
+
+        return $query->execute();
+    }
+
+    public function getLast5CitationsByUser($id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT c
+        FROM App\Entity\Citation c
+        WHERE c.author = :name
+        ORDER BY c.date_add DESC'
+        )->setParameter('name', $id)->setMaxResults(5);
+
+        return $query->execute();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

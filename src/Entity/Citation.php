@@ -44,6 +44,11 @@ class Citation
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date_add;
+
     public function __construct()
     {
         $this->categorie = new ArrayCollection();
@@ -120,6 +125,19 @@ class Citation
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+        $this->setDateAdd();
+
+        return $this;
+    }
+
+    public function getDateAdd(): ?\DateTimeInterface
+    {
+        return $this->date_add;
+    }
+
+    public function setDateAdd(): self
+    {
+        $this->date_add = new \DateTimeImmutable();
 
         return $this;
     }

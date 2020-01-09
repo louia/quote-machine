@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile de {{ user.username }}{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            background: #F5F7FA
+        }
+
+        .stat-val {
+            font-size: 3em;
+            padding-top: 20px;
+            font-weight: bold;
+        }
+
+        .stat-key {
+            font-size: 1.4em;
+            font-weight: 200
+        }
+        .section.profile-heading .column.is-2-tablet.has-text-centered + .has-text-centered {
+            border-left: 1px dotted rgba(0, 0, 0, .2);
+        }
+
+        .container.profile {
+            margin-top: 1%;
+        }
+
+        .control.is-pulled-left span.select {
+            margin-right: 5px;
+            border-radius: 2px;
+        }
+
+        .modal-card .content h1 {
+            padding: 40px 10px 10px;
+            border-bottom: 1px solid #dadada
+        }
+
+        .container.profile .profile-options .tabs ul li.link a {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #F1F1F1;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class='section profile-heading'>
+        <div class='columns is-mobile is-multiline'>
+{#            <div class='column is-2'>#}
+{#                <span class='header-icon user-profile-image'>#}
+{#                    <img alt='' src='http://placehold.it/300x225'>#}
+{#                </span>#}
+{#            </div>#}
+            <div class='column is-4-tablet is-10-mobile name'>
+                <p>
+                    <span class='title is-bold'>{{ user.username | capitalize }}</span>
+                    <br>
+                    <br>
+                </p>
+                <p class='box'>
+                    Membre de l'application depuis le {{ user.dateAdd | date("d/m/Y") }}. <br>
+                    bar de progression ici
+                </p>
+            </div>
+            <div class='column is-2-tablet is-4-mobile has-text-centered'>
+                <p class='stat-val'>{{ nbCit }}</p>
+                <p class='stat-key'>citations</p>
+            </div>
+{#            <div class='column is-2-tablet is-4-mobile has-text-centered'>#}
+{#                <p class='stat-val'>10</p>#}
+{#                <p class='stat-key'>likes</p>#}
+{#            </div>#}
+{#            <div class='column is-2-tablet is-4-mobile has-text-centered'>#}
+{#                <p class='stat-val'>3</p>#}
+{#                <p class='stat-key'>lists</p>#}
+{#            </div>#}
+        </div>
+    </div>
+    <div class="columns">
+        <div class="column"></div>
+        <div class="column is-four-fifths">
+    {% for quote in quotes %}
+        {% if loop.index0 is divisible by(3) %}
+            <div class="tile is-ancestor">
+        {% endif %}
+        <div class="tile is-parent" data-aos="fade-up">
+            <article class="tile is-child box">
+                {% for catg in quote.categorie %}
+                    <span class="tag is-success is-normal">{{catg.name | capitalize}}</span>
+                {% endfor %}
+                <br>
+                <span class="tag is-warning"> Créé par {{ quote.author.username }} le {{ quote.dateadd | date("d/m/Y H:i:s") }}</span>
+                <p class="title">{{quote.content}}</p>
+                <p class="subtitle">{{quote.meta|capitalize}}</p>
+            </article>
+        </div>
+        {% if loop.index is divisible by(3) or loop.last %}
+            </div>
+        {% endif %}
+    {% endfor %}
+        </div>
+        <div class="column"></div>
+    </div>
+{% endblock %}
