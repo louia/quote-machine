@@ -5,19 +5,24 @@ namespace App\DataFixtures;
 use App\Entity\Categorie;
 use App\Entity\Citation;
 use App\Entity\User;
+use App\Event\UserExpEvent;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class AppFixtures extends Fixture
 {
     private $encoder;
 
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    private $eventDispatcher;
+
+    public function __construct(UserPasswordEncoderInterface $encoder, EventDispatcherInterface $eventDispatcher)
     {
         $this->encoder = $encoder;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function load(ObjectManager $manager)
@@ -63,6 +68,8 @@ class AppFixtures extends Fixture
         $quote->setMeta('CHOVANECK Louis');
         $quote->setAuthor($user1);
         $quote->addCategorie($categorie);
+        $event = new UserExpEvent($quote, $user1);
+        $this->eventDispatcher->dispatch($event, UserExpEvent::NEW_QUOTE);
         $manager->persist($quote);
 
         $client = HttpClient::create();
@@ -83,6 +90,8 @@ class AppFixtures extends Fixture
                     $quote->setMeta($data['author']);
                     $quote->addCategorie($categories[mt_rand(0, 14)]);
                     $quote->setAuthor($user2);
+                    $event = new UserExpEvent($quote, $user2);
+                    $this->eventDispatcher->dispatch($event, UserExpEvent::NEW_QUOTE);
 //                    for ($i = 0; $i < mt_rand(0,3); $i++) {
 //                        $quote->addCategorie($categories[mt_rand(0,14)]);
 //                    }
@@ -92,6 +101,8 @@ class AppFixtures extends Fixture
                     $quote->setMeta($data['author']);
                     $quote->setAuthor($user2);
                     $quote->addCategorie($categories[mt_rand(0, 14)]);
+                    $event = new UserExpEvent($quote, $user2);
+                    $this->eventDispatcher->dispatch($event, UserExpEvent::NEW_QUOTE);
 
                     $manager->persist($quote);
                 }

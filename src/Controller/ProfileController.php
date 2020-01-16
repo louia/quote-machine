@@ -19,10 +19,25 @@ class ProfileController extends AbstractController
         //get 5 left citation
         $quotes = $this->getDoctrine()->getRepository(User::class)->getLast5CitationsByUser($user);
 
+        $xp = $user->getExp();
+        $level = 1;
+        $nextlevelxp = 100;
+        $currentxp = 0;
+        while ($xp >= $nextlevelxp) {
+            //$xp = $xp - $nextlevelxp;
+            ++$level;
+            $currentxp = $user->getExp() - $nextlevelxp;
+            $nextlevelxp = $nextlevelxp + $level * 100;
+        }
+        $difference = $level * 100;
+        $pourcentage = $currentxp / $difference * 100;
+
         return $this->render('profile/index.html.twig', [
             'user' => $user,
             'nbCit' => $nbcit[0][1],
             'quotes' => $quotes,
+            'level' => $level,
+            'pourcentage' => $pourcentage,
         ]);
     }
 }

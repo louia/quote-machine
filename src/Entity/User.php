@@ -54,6 +54,11 @@ class User implements UserInterface
      */
     private $dateAdd;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $exp;
+
     public function __construct()
     {
         $this->citations = new ArrayCollection();
@@ -183,6 +188,18 @@ class User implements UserInterface
     public function setDateAdd(): self
     {
         $this->dateAdd = new \DateTimeImmutable();
+
+        return $this;
+    }
+
+    public function getExp(): ?int
+    {
+        return $this->exp;
+    }
+
+    public function setExp(?int $exp): self
+    {
+        $this->exp = $exp;
 
         return $this;
     }

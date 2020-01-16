@@ -43,7 +43,7 @@
                                 <span class="tag is-success is-normal">{{catg.name | capitalize}}</span>
                             {% endfor %}
                             <br>
-                            <span class="tag is-warning"> Créé par {{ quote.author.username }}</span>
+                            <span class="tag is-warning">Créé par &nbsp; <a href="{{ path('profile' , {'username' : quote.author.username }) }}">{{ quote.author.username }}</a></span>
                             <p class="title">{{quote.content}}</p>
                             <p class="subtitle">{{quote.meta|capitalize}}</p>
                             {% if is_granted('quotes_edit',quote) %}

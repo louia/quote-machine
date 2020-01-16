@@ -5,12 +5,14 @@
 namespace App\Controller;
 
 use App\Entity\Citation;
+use App\Event\UserExpEvent;
 use App\Form\QuoteType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class QuoteController extends AbstractController
 {
@@ -56,7 +58,7 @@ class QuoteController extends AbstractController
     /**
      * @Route("/quotes/new", name="quotes_new")
      */
-    public function new(Request $request)
+    public function new(Request $request, EventDispatcherInterface $eventDispatcher)
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
@@ -68,7 +70,15 @@ class QuoteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $quote = $form->getData();
+            foreach ($quote->getCategorie() as $category) {
+                $count = $this->getDoctrine()->getRepository(Citation::class)->findIfUseralreadyUseCatg($user->getId(), $category->getId());
+                if (0 == $count['numberOfUsage']) {
+                    $event = new UserExpEvent($quote, $user);
+                    $eventDispatcher->dispatch($event, UserExpEvent::POST_IN_CATG);
+                }
+            }
+            $event = new UserExpEvent($quote, $user);
+            $eventDispatcher->dispatch($event, UserExpEvent::NEW_QUOTE);
             $entityManager->persist($quote);
             $entityManager->flush();
 

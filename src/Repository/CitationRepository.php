@@ -59,6 +59,22 @@ class CitationRepository extends ServiceEntityRepository
         return $pagination;
     }
 
+    public function findIfUseralreadyUseCatg($userId, $catgId)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT COUNT(c.id) as 'numberOfUsage'
+                    FROM citation c, citation_categorie cc, user u
+                    WHERE u.id=c.author_id AND cc.citation_id = c.id 
+                    AND u.id= :userid AND cc.categorie_id = :catgid";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['userid' => $userId, 'catgid' => $catgId]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetch();
+    }
+
     public function getRandomquote()
     {
         $entityManager = $this->getEntityManager();
