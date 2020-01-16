@@ -8,20 +8,6 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class QuoteControllerTest extends WebTestCase
 {
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
-    private $entityManager;
-
-    protected function setUp()
-    {
-//        $kernel = self::bootKernel();
-
-//        $this->entityManager = self::$kernel->getContainer()
-//            ->get('doctrine')
-//            ->getManager();
-    }
-
     public function testNew()
     {
         $client = static::createClient([], [
@@ -110,7 +96,7 @@ class QuoteControllerTest extends WebTestCase
         $cit = self::$container->get('doctrine')->getManager()->getRepository(Citation::class)
             ->findOneBy(['meta' => 'Louis Chovaneck']);
 
-        $this->assertSame(null, $cit);
+        $this->assertNull($cit);
     }
 
     public function testNewShow()
@@ -157,14 +143,5 @@ class QuoteControllerTest extends WebTestCase
             }
         }
         $this->assertEquals(true, $found);
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        // doing this is recommended to avoid memory leaks
-//        $this->entityManager->close();
-//        $this->entityManager = null;
     }
 }

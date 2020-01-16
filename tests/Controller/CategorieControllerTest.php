@@ -7,15 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CategorieControllerTest extends WebTestCase
 {
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
-    private $entityManager;
-
-    protected function setUp()
-    {
-    }
-
     public function testNew()
     {
         $client = static::createClient([], [
@@ -118,12 +109,5 @@ class CategorieControllerTest extends WebTestCase
             ->findOneBy(['name' => 'LifeStyle']);
 
         $this->assertSame(null, $cat);
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        // doing this is recommended to avoid memory leaks
     }
 }
