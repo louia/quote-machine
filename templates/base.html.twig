@@ -93,8 +93,12 @@
     </section>
 {% endif %}
 
-<br>
 
+{% set br = block('br') %}
+{% if br is empty %}
+    <br>
+    {% block br %}{% endblock %}
+{% endif %}
 {% block body %}{% endblock %}
 <script>
     document.addEventListener('DOMContentLoaded', () => {
