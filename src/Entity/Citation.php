@@ -49,9 +49,15 @@ class Citation
      */
     private $date_add;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="likers")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->categorie = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,5 +146,38 @@ class Citation
         $this->date_add = new \DateTimeImmutable();
 
         return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addLiker($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeLiker($this);
+        }
+
+        return $this;
+    }
+
+    public function countLikes()
+    {
+        return $this->users->count();
     }
 }

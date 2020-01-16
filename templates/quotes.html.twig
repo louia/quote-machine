@@ -42,6 +42,8 @@
                             {% for catg in quote.categorie %}
                                 <span class="tag is-success is-normal">{{catg.name | capitalize}}</span>
                             {% endfor %}
+                            <i class="fas fa-heart"></i>
+                            {{ quote.users | length }}
                             <br>
                             <span class="tag is-warning">Créé par &nbsp; <a href="{{ path('profile' , {'username' : quote.author.username }) }}">{{ quote.author.username }}</a></span>
                             <p class="title">{{quote.content}}</p>

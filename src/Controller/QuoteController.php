@@ -44,7 +44,10 @@ class QuoteController extends AbstractController
     public function index(Request $request, PaginatorInterface $paginator)
     {
         $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAllWithPaginator($paginator, $request);
-
+//        foreach ($quotes as $quote) {
+//            $quote[] = ['numberofLike' => $quote->countLikes()];
+//        }
+        dump($quotes);
         $name = $request->query->get('name');
         if ('' != $name) {
             $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAllbyContent($name, $paginator, $request);

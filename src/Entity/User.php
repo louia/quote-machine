@@ -59,9 +59,15 @@ class User implements UserInterface
      */
     private $exp;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Citation", inversedBy="users")
+     */
+    private $likers;
+
     public function __construct()
     {
         $this->citations = new ArrayCollection();
+        $this->likers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -200,6 +206,32 @@ class User implements UserInterface
     public function setExp(?int $exp): self
     {
         $this->exp = $exp;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Citation[]
+     */
+    public function getLikers(): Collection
+    {
+        return $this->likers;
+    }
+
+    public function addLiker(Citation $liker): self
+    {
+        if (!$this->likers->contains($liker)) {
+            $this->likers[] = $liker;
+        }
+
+        return $this;
+    }
+
+    public function removeLiker(Citation $liker): self
+    {
+        if ($this->likers->contains($liker)) {
+            $this->likers->removeElement($liker);
+        }
 
         return $this;
     }
