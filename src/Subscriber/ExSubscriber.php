@@ -24,29 +24,26 @@ class ExSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onNewCatg(UserExpEvent $event)
+    private function addExpToUser(int $numberofExp, UserExpEvent $event)
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['id' => $event->getQuote()->getAuthor()->getId()]);
         if (null == $user) {
             $user = $event->getUser();
         }
 
-        $user->setExp($user->getExp() + 120);
+        $user->setExp($user->getExp() + $numberofExp);
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
 
+    public function onNewCatg(UserExpEvent $event)
+    {
+        $this->addExpToUser(120, $event);
+    }
+
     public function onQuoteNew(UserExpEvent $event)
     {
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['id' => $event->getQuote()->getAuthor()->getId()]);
-        if (null == $user) {
-            $user = $event->getUser();
-        }
-
-        $user->setExp($user->getExp() + 100);
-
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->addExpToUser(100, $event);
     }
 }

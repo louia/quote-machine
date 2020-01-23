@@ -54,7 +54,8 @@
             {#            </div>#}
             <div class='column is-4-tablet is-10-mobile name'>
                 <p>
-                    <span class='title is-bold'>{{ user.username | capitalize }}</span>
+                    <span class='title is-bold'>{{ user.username | capitalize }}</span><br>
+                    <span class='subtitle is-bold'><a href="mailto:{{ user.email }}">{{ user.email }}</a></span>
                     <br>
                     <br>
                 </p>
