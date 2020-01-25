@@ -47,7 +47,6 @@ class QuoteController extends AbstractController
 //        foreach ($quotes as $quote) {
 //            $quote[] = ['numberofLike' => $quote->countLikes()];
 //        }
-        dump($quotes);
         $name = $request->query->get('name');
         if ('' != $name) {
             $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAllbyContent($name, $paginator, $request);

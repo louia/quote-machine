@@ -14,6 +14,9 @@
     </script>
 {% endblock %}
 
+{% block stylesheets %}
+    {{ encore_entry_link_tags('like') }}
+{% endblock %}
 
 {% block body %}
     <div class="columns">
@@ -60,12 +63,14 @@
                             <p class="title">{{quote.content}}</p>
                             <p class="subtitle">{{quote.meta|capitalize}}</p>
 
-                            {% set liked = "" %}
-                            {% for user in quote.users %}
-                                {% if user.id == app.user.id %}
-                                    {% set liked = "checked" %}
-                                {% endif %}
-                            {% endfor %}
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                {% set liked = "" %}
+                                {% for user in quote.users %}
+                                    {% if user.id == app.user.id %}
+                                        {% set liked = "checked" %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
                             <input type="checkbox" class="checkbox" {{ liked }} onchange="dosalert(this)"
                                    id="checkbox{{ quote.id }}"/>
                             <label for="checkbox{{ quote.id }}">
