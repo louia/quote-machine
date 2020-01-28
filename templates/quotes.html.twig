@@ -3,12 +3,39 @@
 {% block title %}Liste de citations{% endblock %}
 {% block hero %}Liste de citations{% endblock %}
 {% block javascripts %}
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
     <script>
-        function doalert(checkboxElem) {
+        function doalert(checkboxElem, id) {
             if (checkboxElem.checked) {
-                alert("hi");
+                $.ajax({
+                    url: "/like/add/" + id,
+                    dataType: 'json',
+                    success: function (data) {
+                        // $(this).addClass("done");
+                        // data.code
+                        if (data.code === "ok") {
+                            var number = parseInt($("#nblike" + id).html());
+                            number++;
+                            $("#nblike" + id).text(number);
+                        }
+
+                    }
+                });
             } else {
-                alert("bye");
+                $.ajax({
+                    url: "/like/remove/" + id,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.code === "ok") {
+                            var number = parseInt($("#nblike" + id).html());
+                            number--;
+                            $("#nblike" + id).text(number);
+                        }
+                    }
+                });
             }
         }
     </script>
@@ -16,6 +43,7 @@
 
 {% block stylesheets %}
     {{ encore_entry_link_tags('like') }}
+
 {% endblock %}
 
 {% block body %}
@@ -63,17 +91,24 @@
                             <p class="title">{{quote.content}}</p>
                             <p class="subtitle">{{quote.meta|capitalize}}</p>
 
+                            {% set liked = "" %}
+                            {% set likable = "true" %}
+
                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                {% set liked = "" %}
+                                {% if quote.author.id == app.user.id %}
+                                    {% set likable = "false" %}
+                                {% endif %}
                                 {% for user in quote.users %}
                                     {% if user.id == app.user.id %}
                                         {% set liked = "checked" %}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
-                            <input type="checkbox" class="checkbox" {{ liked }} onchange="dosalert(this)"
+                            <input style="user-select: none;" type="checkbox"
+                                   class="checkbox" {{ liked }} {{ is_granted("IS_AUTHENTICATED_REMEMBERED") and likable == 'true' ? '' : 'disabled' }}
+                                   onchange="doalert(this,{{ quote.id }})"
                                    id="checkbox{{ quote.id }}"/>
-                            <label for="checkbox{{ quote.id }}">
+                            <label style="user-select: none;" for="checkbox{{ quote.id }}">
                                 <svg id="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
                                     <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
                                         <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z"
@@ -117,9 +152,7 @@
                                     </g>
                                 </svg>
                             </label>
-                            {{ quote.users | length }}
-
-
+                            <span id="nblike{{ quote.id }}" style="user-select: none;">{{ quote.users | length }}</span>
                             {% if is_granted('quotes_edit',quote) %}
                                 <a class="button is-info is-rounded " href="{{ path('quotes_edit',{'id': quote.id}) }}">Modifier
                                     &nbsp;<i class="far fa-edit"></i></a>
