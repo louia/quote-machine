@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Citation;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,11 +14,14 @@ class ProfileController extends AbstractController
      */
     public function index(User $user)
     {
-        //get all citation
+        //get all citations
         $nbcit = $this->getDoctrine()->getRepository(User::class)->getAllCitationByuser($user);
 
-        //get 5 left citation
+        //get 5 left citations
         $quotes = $this->getDoctrine()->getRepository(User::class)->getLast5CitationsByUser($user);
+
+        //get 5 left likes
+        $likes = $this->getDoctrine()->getRepository(Citation::class)->getLast5LikesByUser($user);
 
         $xp = $user->getExp();
         $level = 1;
@@ -38,6 +42,7 @@ class ProfileController extends AbstractController
             'quotes' => $quotes,
             'level' => $level,
             'pourcentage' => $pourcentage,
+            'likes' => $likes,
         ]);
     }
 }

@@ -110,6 +110,26 @@
                     </div>
                 {% endif %}
             {% endfor %}
+            <div class="is-divider"
+                 data-content="{{ (likes | length > 1) ? likes | length : '' }} DERNIER{{ (likes | length > 1) ? 'S' : '' }} LIKES"></div>
+            {% for quote in likes %}
+                {% if loop.index0 is divisible by(3) %}
+                    <div class="tile is-ancestor">
+                {% endif %}
+                <div class="tile is-parent" data-aos="fade-up">
+                    <article class="tile is-child box">
+                        {% for catg in quote.categorie %}
+                            <span class="tag is-success is-normal">{{ catg.name | capitalize }}</span>
+                        {% endfor %}
+                        <span class="tag is-warning"> Créé par {{ quote.author.username }} le {{ quote.dateadd | date("d/m/Y H:i:s") }}</span>
+                        <p class="title">{{ quote.content }}</p>
+                        <p class="subtitle">{{ quote.meta|capitalize }}</p>
+                    </article>
+                </div>
+                {% if loop.index is divisible by(3) or loop.last %}
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
         <div class="column"></div>
     </div>

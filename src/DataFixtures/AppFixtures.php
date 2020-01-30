@@ -72,6 +72,15 @@ class AppFixtures extends Fixture
         $this->eventDispatcher->dispatch($event, UserExpEvent::NEW_QUOTE);
         $manager->persist($quote);
 
+        $quote = new Citation();
+        $quote->setContent('L’amour est semblable à une rivière, on y rencontre souvent des obstacles mais le chemin en vaut toujours le détour');
+        $quote->setMeta('Laurie Coelho Pereira');
+        $quote->setAuthor($user1);
+        $quote->addCategorie($categorie);
+        $event = new UserExpEvent($quote, $user1);
+        $this->eventDispatcher->dispatch($event, UserExpEvent::NEW_QUOTE);
+        $manager->persist($quote);
+
         $client = HttpClient::create();
         for ($i = 0; $i < 20; ++$i) {
             $response = $client->request('GET', 'http://api.quotable.io/random');

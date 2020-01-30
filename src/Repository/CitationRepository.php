@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Citation;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -96,6 +97,18 @@ class CitationRepository extends ServiceEntityRepository
             ->setParameter('name', $catg)
             ->orderBy('RAND()');
 
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
+
+    public function getLast5LikesByUser(User $user)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->join('c.users', 'cc')
+            ->where('cc.id = :id')
+            ->setParameter('id', $user->getId())
+            ->setMaxResults(5);
         $query = $qb->getQuery();
 
         return $query->execute();
