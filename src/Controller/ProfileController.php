@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Citation;
 use App\Entity\User;
+use GamificationEngine;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,18 +24,9 @@ class ProfileController extends AbstractController
         //get 5 left likes
         $likes = $this->getDoctrine()->getRepository(Citation::class)->getLast5LikesByUser($user);
 
-        $xp = $user->getExp();
-        $level = 1;
-        $nextlevelxp = 100;
-        $currentxp = 0;
-        while ($xp >= $nextlevelxp) {
-            //$xp = $xp - $nextlevelxp;
-            ++$level;
-            $currentxp = $user->getExp() - $nextlevelxp;
-            $nextlevelxp = $nextlevelxp + $level * 100;
-        }
-        $difference = $level * 100;
-        $pourcentage = $currentxp / $difference * 100;
+        $level = GamificationEngine::computeLevelForUser($user);
+
+        $pourcentage = GamificationEngine::computeLevelCompletionForUser($user);
 
         return $this->render('profile/index.html.twig', [
             'user' => $user,
