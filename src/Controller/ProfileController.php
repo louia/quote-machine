@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Citation;
 use App\Entity\User;
-use GamificationEngine;
+use App\Util\GamificationEngine;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 

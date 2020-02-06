@@ -72,15 +72,20 @@ class QuoteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $newcatg = false;
             foreach ($quote->getCategorie() as $category) {
                 $count = $this->getDoctrine()->getRepository(Citation::class)->findIfUseralreadyUseCatg($user->getId(), $category->getId());
                 if (0 == $count['numberOfUsage']) {
+                    $newcatg = true;
                     $event = new UserExpEvent($quote, $user);
                     $eventDispatcher->dispatch($event, UserExpEvent::POST_IN_CATG);
                 }
             }
-            $event = new UserExpEvent($quote, $user);
-            $eventDispatcher->dispatch($event, UserExpEvent::NEW_QUOTE);
+            if (!$newcatg) {
+                $event = new UserExpEvent($quote, $user);
+                $eventDispatcher->dispatch($event, UserExpEvent::NEW_QUOTE);
+            }
+
             $entityManager->persist($quote);
             $entityManager->flush();
 
