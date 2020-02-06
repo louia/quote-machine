@@ -23,6 +23,7 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+
     app.slugger:
         class: App\Util\Slugger
 

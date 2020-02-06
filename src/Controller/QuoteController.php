@@ -9,9 +9,15 @@ use App\Event\UserExpEvent;
 use App\Form\QuoteType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class QuoteController extends AbstractController
@@ -55,6 +61,32 @@ class QuoteController extends AbstractController
         return $this->render('quotes.html.twig', [
             'pagination' => $quotes, 'query' => $name,
         ]);
+    }
+
+    /**
+     * @Route("/quotes.csv", name="quotes_csv")
+     *
+     * @return Response
+     */
+    public function csv(SerializerInterface $serializer)
+    {
+        $quotes = $this->getDoctrine()->getRepository(Citation::class)->findAllForCsv();
+
+        $encoders = [new CsvEncoder()];
+        $normalizers = [new DateTimeNormalizer(), new ObjectNormalizer()];
+
+        $serializer = new Serializer($normalizers, $encoders);
+        $quotesSerialized = $serializer->serialize($quotes, 'csv');
+
+        $response = new Response($quotesSerialized);
+        $disposition = HeaderUtils::makeDisposition(
+            HeaderUtils::DISPOSITION_ATTACHMENT,
+            'quotes.csv'
+        );
+
+        $response->headers->set('Content-Disposition', $disposition);
+
+        return $response;
     }
 
     /**

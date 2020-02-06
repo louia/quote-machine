@@ -27,6 +27,17 @@ class CitationRepository extends ServiceEntityRepository
         return $this->findBy([], ['content' => 'ASC']);
     }
 
+    public function findAllForCsv()
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c.content, c.meta, cc.username author, c.date_add')
+            ->join('c.author', 'cc');
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
+
     public function findAllWithPaginator($paginator, $request)
     {
         $query = $this->createQueryBuilder('c')->orderBy('c.content')->getQuery();
