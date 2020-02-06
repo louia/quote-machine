@@ -113,4 +113,17 @@ class CitationRepository extends ServiceEntityRepository
 
         return $query->execute();
     }
+
+    public function getOrderLike()
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c, COUNT(cc.id) AS HIDDEN nbLike')
+            ->join('c.users', 'cc')
+            ->groupBy('c.id')
+            ->orderBy('nbLike', 'DESC');
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
 }

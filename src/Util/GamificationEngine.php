@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Util;
+
 use App\Entity\User;
 
 class GamificationEngine

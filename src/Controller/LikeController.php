@@ -61,4 +61,16 @@ class LikeController extends AbstractController
 
         return $response;
     }
+
+    /**
+     * @Route("/like/top", name="like_ranking")
+     */
+    public function rank()
+    {
+        $likes = $this->getDoctrine()->getRepository(Citation::class)->getOrderLike();
+
+        return $this->render('Like/ordered_like.tml.twig', [
+            'likes' => $likes,
+        ]);
+    }
 }

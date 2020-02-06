@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}Liste des citations triée par nombre de likes{% endblock %}
+{% block hero %}Liste des citations triée par nombre de likes{% endblock %}
+
+{% block body %}
+    {% for quote in likes %}
+
+    <section class="hero {{ random(['is-warning','is-light','is-dark','is-success']) }}">
+        <div class="hero-body">
+            <div class="container">
+                {% for catg in quote.categorie %}
+                    <span class="tag is-success is-normal">{{catg.name | capitalize}}</span>
+                {% endfor %}
+                <span class="tag is-danger is-medium">{{quote.users | length}} likes</span>
+                <h1 class="title">
+                    {{ quote.content }}
+                </h1>
+                <h2 class="subtitle">
+                    {{ quote.meta }}
+                </h2>
+
+                {% if is_granted('quotes_edit',quote) %}
+                    <a class="button is-info is-rounded " href="{{ path('quotes_edit',{'id': quote.id}) }}">Modifier
+                        &nbsp;<i class="far fa-edit"></i></a>
+                {% endif %}
+                {% if is_granted('quotes_delete',quote) %}
+                    <a class="button is-danger is-rounded is-light"
+                       href="{{ path('quotes_delete', { 'id': quote.id }) }}">Supprimer &nbsp;<i
+                                class="fas fa-trash"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    {% endfor %}
+{% endblock %}

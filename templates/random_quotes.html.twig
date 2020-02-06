@@ -17,11 +17,15 @@
                 {{ quote.meta }}
             </h2>
 
-            <a class="button is-info is-rounded" href="{{ path('quotes_edit',{'id': quote.id}) }}">Modifier
-                &nbsp;<i class="far fa-edit"></i></a>
-            <a class="button is-danger is-rounded"
-               href="{{ path('quotes_delete', { 'id': quote.id }) }}">Supprimer &nbsp;<i
-                        class="fas fa-trash"></i></a>
+            {% if is_granted('quotes_edit',quote) %}
+                <a class="button is-info is-rounded " href="{{ path('quotes_edit',{'id': quote.id}) }}">Modifier
+                    &nbsp;<i class="far fa-edit"></i></a>
+            {% endif %}
+            {% if is_granted('quotes_delete',quote) %}
+                <a class="button is-danger is-rounded is-light"
+                   href="{{ path('quotes_delete', { 'id': quote.id }) }}">Supprimer &nbsp;<i
+                            class="fas fa-trash"></i></a>
+            {% endif %}
         </div>
     </div>
 </section>
