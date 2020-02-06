@@ -37,6 +37,7 @@
         "friendsofphp/php-cs-fixer": "^2.15",
         "fzaninotto/faker": "^1.8",
         "phpro/grumphp": "^0.16.1",
+        "phpstan/phpstan": "^0.12.9",
         "symfony/css-selector": "4.3.*",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
