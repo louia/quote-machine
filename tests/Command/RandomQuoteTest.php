@@ -20,6 +20,6 @@ class CreateUserCommandTest extends KernelTestCase
         ]);
 
         $output = $commandTester->getDisplay();
-        $this->assertContains('je suis beau', $output);
+        $this->assertStringContainsString('je suis beau', $output);
     }
 }

@@ -12,7 +12,7 @@ class HelloWorldTest extends WebTestCase
 
         $crawler = $client->request('GET', '/hello');
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             'Hello World!',
             $client->getResponse()->getContent()
         );
