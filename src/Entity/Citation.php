@@ -2,13 +2,20 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CitationRepository")
+ * @ApiResource(
+ *     collectionOperations={"get"},
+ *     itemOperations={"get"},
+ *     normalizationContext={"groups"={"quote_read"}}
+ * )
  */
 class Citation
 {
@@ -22,6 +29,7 @@ class Citation
     /**
      * @ORM\Column(type="string", length=5000)
      * @Assert\NotBlank
+     * @Groups("quote_read")
      * @Assert\Length(min = "3")
      */
     private $content;
@@ -29,11 +37,13 @@ class Citation
     /**
      * @ORM\Column(type="string", length=5000)
      * @Assert\NotBlank
+     * @Groups("quote_read")
      * @Assert\Length(min = "3")
      */
     private $meta;
 
     /**
+     * @Groups("quote_read")
      * @ORM\ManyToMany(targetEntity="App\Entity\Categorie", inversedBy="citations")
      */
     private $categorie;
@@ -41,11 +51,13 @@ class Citation
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="citations")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("quote_read")
      */
     private $author;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("quote_read")
      */
     private $date_add;
 

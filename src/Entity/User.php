@@ -2,16 +2,23 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
+ * @ApiResource(
+ *     collectionOperations={"get"},
+ *     itemOperations={"get"},
+ *     normalizationContext={"groups"={"user_read"}}
+ * )
  */
 class User implements UserInterface
 {
@@ -24,6 +31,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups("user_read")
      */
     private $username;
 
@@ -51,11 +59,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("user_read")
      */
     private $dateAdd;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups("user_read")
      */
     private $exp;
 

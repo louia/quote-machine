@@ -1,3 +1,7 @@
 parameters:
+	autoload_directories:
+		- %rootDir%/../../../build
+	autoload_files:
+		- %rootDir%/../../../generated/routes/GeneratedRouteList.php
 	excludes_analyse:
-		- src/Magrations/*
+	   	- src/Magrations/*

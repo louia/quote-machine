@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Util\Slugger;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -15,6 +17,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\CategorieRepository")
  * @Vich\Uploadable
  * @UniqueEntity("slug")
+ * @ApiResource(
+ *     collectionOperations={"get"},
+ *     itemOperations={"get"},
+ *     normalizationContext={"groups"={"categorie_read"}}
+ * )
  */
 class Categorie
 {
@@ -28,6 +35,7 @@ class Categorie
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
+     * @Groups("categorie_read")
      */
     private $name;
 
@@ -50,6 +58,8 @@ class Categorie
     /**
      * @ORM\Column(type="datetime", nullable=true)
      *
+     * @Groups("categorie_read")
+     *
      * @var \DateTime
      */
     private $updatedAt;
@@ -61,6 +71,7 @@ class Categorie
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("categorie_read")
      */
     private $slug;
 
