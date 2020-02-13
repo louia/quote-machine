@@ -14,9 +14,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CitationRepository")
  * @ApiResource(
- *     collectionOperations={"get"},
- *     itemOperations={"get"},
- *     normalizationContext={"groups"={"quote_read"}}
+ *     collectionOperations={
+ *     "get",
+ *     "post"={"security"="is_granted('ROLE_USER')"}
+ * },
+ *     itemOperations={
+ *     "get",
+ *     "delete"={"security"="is_granted('quotes_delete', object)"},
+ *     "patch"={"security"="is_granted('quotes_edit', object)"},
+ * },
+ *     normalizationContext={"groups"={"quote_read"}},
+ *     denormalizationContext={"groups"={"quote_write"}}
  * )
  * @ApiFilter(SearchFilter::class, properties={"content": "partial", "meta": "partial", "author": "partial"})
  */
@@ -32,7 +40,7 @@ class Citation
     /**
      * @ORM\Column(type="string", length=5000)
      * @Assert\NotBlank
-     * @Groups("quote_read")
+     * @Groups({"quote_read","quote_write"})
      * @Assert\Length(min = "3")
      */
     private $content;
@@ -40,13 +48,13 @@ class Citation
     /**
      * @ORM\Column(type="string", length=5000)
      * @Assert\NotBlank
-     * @Groups("quote_read")
+     * @Groups({"quote_read", "quote_write"})
      * @Assert\Length(min = "3")
      */
     private $meta;
 
     /**
-     * @Groups("quote_read")
+     * @Groups({"quote_read", "quote_write"})
      * @ORM\ManyToMany(targetEntity="App\Entity\Categorie", inversedBy="citations")
      */
     private $categorie;

@@ -18,9 +18,18 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @UniqueEntity("slug")
  * @ApiResource(
- *     collectionOperations={"get"},
- *     itemOperations={"get"},
- *     normalizationContext={"groups"={"categorie_read"}}
+ *     collectionOperations={
+ *     "get",
+ *     "post"={"security"="is_granted('ROLE_USER')"}
+ * },
+ *     itemOperations={
+ *     "get",
+ *     "delete"={"security"="is_granted('ROLE_USER')"},
+ *     "patch"={"security"="is_granted('ROLE_USER')"},
+ * },
+ *
+ *     normalizationContext={"groups"={"categorie_read"}},
+ *     denormalizationContext={"groups"={"categorie_write"}}
  * )
  */
 class Categorie
@@ -35,7 +44,7 @@ class Categorie
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
-     * @Groups("categorie_read")
+     * @Groups({"categorie_read","categorie_write"})
      */
     private $name;
 
@@ -66,6 +75,7 @@ class Categorie
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Citation", mappedBy="categorie")
+     * @Groups({"categorie_read","categorie_write"})
      */
     private $citations;
 
