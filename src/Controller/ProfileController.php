@@ -18,6 +18,9 @@ class ProfileController extends AbstractController
         //get all citations
         $nbcit = $this->getDoctrine()->getRepository(User::class)->getAllCitationByuser($user);
 
+        //get all likes
+        $nblike = $this->getDoctrine()->getRepository(Citation::class)->getAllLikeByuser($user);
+
         //get 5 left citations
         $quotes = $this->getDoctrine()->getRepository(User::class)->getLast5CitationsByUser($user);
 
@@ -31,6 +34,7 @@ class ProfileController extends AbstractController
         return $this->render('profile/index.html.twig', [
             'user' => $user,
             'nbCit' => $nbcit[0][1],
+            'nbLikes' => count($nblike),
             'quotes' => $quotes,
             'level' => $level,
             'pourcentage' => $pourcentage,

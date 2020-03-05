@@ -137,4 +137,15 @@ class CitationRepository extends ServiceEntityRepository
 
         return $query->execute();
     }
+
+    public function getAllLikeByuser($user)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->join('c.users', 'cc')
+            ->where('cc.id = :id')
+            ->setParameter('id', $user->getId());
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
 }

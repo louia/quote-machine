@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Citation;
 use App\Entity\User;
+use App\Event\UserExpEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class LikeController extends AbstractController
 {
@@ -15,7 +17,7 @@ class LikeController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function like(Citation $quote)
+    public function like(Citation $quote, EventDispatcherInterface $eventDispatcher)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
         /** @var User $user */
@@ -29,6 +31,12 @@ class LikeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($quote);
             $entityManager->flush();
+
+            $event = new UserExpEvent($quote, $user);
+            $eventDispatcher->dispatch($event, UserExpEvent::LIKE_QUOTE);
+
+            $event = new UserExpEvent($quote, $user);
+            $eventDispatcher->dispatch($event, UserExpEvent::LIKE_QUOTE_AUTHOR);
         } else {
             $response->setData(['code' => 'notok']);
         }

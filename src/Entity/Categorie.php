@@ -20,12 +20,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ApiResource(
  *     collectionOperations={
  *     "get",
- *     "post"={"security"="is_granted('ROLE_USER')"}
+ *     "post"={"security"="is_granted('ROLE_ADMIN')"}
  * },
  *     itemOperations={
  *     "get",
- *     "delete"={"security"="is_granted('ROLE_USER')"},
- *     "patch"={"security"="is_granted('ROLE_USER')"},
+ *     "delete"={"security"="is_granted('ROLE_ADMIN')"},
+ *     "patch"={"security"="is_granted('ROLE_ADMIN')"},
  * },
  *
  *     normalizationContext={"groups"={"categorie_read"}},
