@@ -32,6 +32,12 @@ Installer webpackEncore :
 ```sh
 npm run dev
 ```
+<br>
+Lancer MailHog avec Docker :
+ 
+```sh
+docker run -d -p 1025:1025 -p 8025:8025 mailhog/mailhog
+```
 <hr>
 <h4>Fixer le code</h4>
 

@@ -81,6 +81,7 @@ class Citation
     {
         $this->categorie = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->setDateAdd();
     }
 
     public function getId(): ?int
