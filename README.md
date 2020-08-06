@@ -5,7 +5,7 @@
 
 > La Quote Machine est composé de fonctionnalités diverses et variées comme par exemple un CRUD de quotes, l'affichage d'une quote aléatoire, un système de catégorie, un système de droit et des imports en ligne de commande et un système d'envoi de mail. 
 
-> Ce projet a été réalisé durant mon année de licence WIMSI dans le cadre de ma formation à **Symfony 4**. Les tests unitaires et fonctionnels on été réalisé avec **PHPUnit**.
+> Ce projet a été réalisé durant mon année de licence WIMSI dans le cadre de ma formation à **Symfony 4**. Les tests unitaires et fonctionnels on été réalisés avec **PHPUnit**.
 
 ### 🏠 [Homepage](/)
 
