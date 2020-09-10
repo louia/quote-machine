@@ -7,7 +7,7 @@
 
 > Ce projet a été réalisé durant mon année de licence WIMSI dans le cadre de ma formation à **Symfony 4**. Les tests unitaires et fonctionnels on été réalisés avec **PHPUnit**.
 
-### 🏠 [Homepage](/)
+### 🏠 Homepage
 
 ## Install
 
